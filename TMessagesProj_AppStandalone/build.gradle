@@ -277,10 +277,12 @@ static def getOSName() {
 }
 
 def desktopPath
+def desktopUsername = project.ext.has('SYSTEM_USERNAME') ?
+        project.ext.get('SYSTEM_USERNAME') : System.getProperty('user.name')
 if (isWindows()) {
-    desktopPath = "C:/Users/${SYSTEM_USERNAME}/Desktop/Opengram/Stable"
+    desktopPath = "C:/Users/${desktopUsername}/Desktop/Opengram/Stable"
 } else if (isMacOS()) {
-    desktopPath = "/Users/${SYSTEM_USERNAME}/Desktop/Opengram/Stable"
+    desktopPath = "/Users/${desktopUsername}/Desktop/Opengram/Stable"
 }
 
 tasks.register('copyFiles', Copy) {
