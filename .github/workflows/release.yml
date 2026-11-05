@@ -56,7 +56,7 @@ jobs:
         run: |
           set -euxo pipefail
           # media3 must be checked out from the Telegram-compatible fork/branch.
-          git clone --depth 1 --branch telegram-v1.10.1 https://github.com/Arseny271/media.git TMessagesProj_Modules/media
+          git clone --depth 1 --branch telegram-v1.10.1-ffmpeg https://github.com/Arseny271/media.git TMessagesProj_Modules/media
           git clone --depth 1 https://github.com/dkaraush/jlatexmath-android.git TMessagesProj/lib/jlatexmath
           git clone --depth 1 https://chromium.googlesource.com/libyuv/libyuv TMessagesProj/jni/third_party/libyuv
           git clone --depth 1 https://github.com/abseil/abseil-cpp.git TMessagesProj/jni/third_party/absl
