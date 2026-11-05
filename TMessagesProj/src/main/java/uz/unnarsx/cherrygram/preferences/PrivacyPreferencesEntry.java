@@ -1,12 +1,8 @@
 /**
- * This is the source code of Cherrygram for Android.
+ * This is the source code of Opengram for Android.
  * It is licensed under GNU GPL v. 2 or later.
  * You should have received a copy of the license in this archive (see LICENSE).
- * Please, be respectful and credit the original author if you use this code.
- *
- * Copyright github.com/arsLan4k1390, 2022-2026.
  */
-
 package uz.unnarsx.cherrygram.preferences;
 
 import static org.telegram.messenger.LocaleController.getString;
@@ -100,7 +96,7 @@ public class PrivacyPreferencesEntry extends BaseCGPreferencesEntry {
         items.add(UItem.asShadow(null));
 
         items.add(UItem.asHeader(getString(R.string.FilterChats)));
-        if ((CherrygramCoreConfig.isStandalonePremiumBuild() || CherrygramCoreConfig.isDevBuild()) && (getUserConfig().clientUserId == 6578415824L || getUserConfig().clientUserId == Constants.Cherrygram_Owner)) {
+        if (CherrygramCoreConfig.isStandalonePremiumBuild() || CherrygramCoreConfig.isDevBuild()) {
             items.add(SettingsHelper.asSwitchCG(hideArchivedStoriesRow, "Скрыть архивированные истории", "Скрывает раздел архивированных историй в профиле")
                     .setChecked(CherrygramPrivacyConfig.INSTANCE.getHideArchivedStories())
             );

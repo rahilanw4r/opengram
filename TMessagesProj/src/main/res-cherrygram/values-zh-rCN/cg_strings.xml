@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- by t.me/arsLan-->
-    <string name="CG_FollowChannelTitle">订阅官方频道</string>
+        <string name="CG_FollowChannelTitle">订阅官方频道</string>
     <string name="CG_FollowChannelInfo">加入频道，随时了解Opengram的所有新闻和功能更新！</string>
     <string name="CG_DoNotRemindAgain">不再提醒</string>
     <!--Telegram screens-->
@@ -424,7 +423,7 @@
     <string name="DP_Donate_GiftMarket_Desc">2. 侧边菜单中的 “**礼品市场**” 按钮。</string>
     <string name="DP_Donate_MessageFilter_Desc">3. “**消息过滤器**” 功能。</string>
     <string name="DP_Donate_MessageMenu_Desc">4. “**iOS 风格**” 的消息菜单。</string>
-    <string name="DP_Donate_Cheque">将付款确认书发送到 **@arsLan** 以获取奖励。</string>
+    <string name="DP_Donate_Cheque">将付款确认书发送到 **@opengram** 以获取奖励。</string>
     <string name="DP_Donate_Terms">捐赠前，请阅读 **捐赠条款**。所有捐赠条目均为自愿执行且不可退款。</string>
     <string name="DP_Donate_Counter_one">**%1$d** 人已支持此项目并获得奖励</string>
     <string name="DP_Donate_Counter_few">**%1$d** 人已支持此项目并获得奖励</string>
@@ -441,7 +440,7 @@
     <string name="DP_Donate_Method_Int">国际支付系统</string>
     <string name="DP_Donate_Method_Rus">适用于俄罗斯联邦居民</string>
     <string name="DP_Donate_Method_Uzb">适用于乌兹别克斯坦居民</string>
-    <string name="DP_Donate_Method_Surname">如果支付系统需要填写收款人的个人信息，请联系 **@arsLan**。</string>
+    <string name="DP_Donate_Method_Surname">如果支付系统需要填写收款人的个人信息，请联系 **@opengram**。</string>
     <string name="DP_Donate_Exclusive">支持者专属功能</string>
     <string name="DP_Donate_ExclusiveDesc">支持本项目来解锁所有功能。</string>
     <!--Donations-->

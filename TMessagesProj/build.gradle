@@ -110,7 +110,7 @@ dependencies {
     implementation 'com.android.billingclient:billing:8.0.0'
     implementation 'com.google.code.gson:gson:2.14.0'
 
-    // Cherrygram
+    // Opengram
     implementation 'com.squareup.okhttp3:okhttp:5.4.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0'

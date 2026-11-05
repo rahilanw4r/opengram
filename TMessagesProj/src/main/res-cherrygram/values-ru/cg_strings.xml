@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- by t.me/arsLan-->
-    <string name="CG_FollowChannelTitle">Подписаться на официальный канал</string>
+        <string name="CG_FollowChannelTitle">Подписаться на официальный канал</string>
     <string name="CG_FollowChannelInfo">Присоединяйтесь к каналу, чтобы быть в курсе всех новостей и возможностей Opengram!</string>
     <string name="CG_DoNotRemindAgain">Не напоминать</string>
 
@@ -548,7 +547,7 @@
     <string name="DP_Donate_GiftMarket_Desc">2. Кнопку \"**Маркетплейс подарков**\" в боковом меню.</string>
     <string name="DP_Donate_MessageFilter_Desc">3. Функцию \"**Фильтр сообщений**\"</string>
     <string name="DP_Donate_MessageMenu_Desc">4. Меню сообщения \"**в стиле Telegram iOS**\". Не поддерживается на планшетах.</string>
-    <string name="DP_Donate_Cheque">Отправьте подтверждение платежа **@arsLan** для получения бонусов.</string>
+    <string name="DP_Donate_Cheque">Отправьте подтверждение платежа **@opengram** для получения бонусов.</string>
     <string name="DP_Donate_Terms">Перед донатом, пожалуйста, ознакомьтесь с **Условиями донатов**. Все донаты являются добровольными и безвозвратными.</string>
 
     <string name="DP_Donate_Counter_one">**%1$d** человек уже поддержал проект и получил бонусы</string>
@@ -570,7 +569,7 @@
     <string name="DP_Donate_Method_Int">Международные платежные системы</string>
     <string name="DP_Donate_Method_Rus">Для резидентов РФ</string>
     <string name="DP_Donate_Method_Uzb">Для резидентов Узбекистана</string>
-    <string name="DP_Donate_Method_Surname">Пожалуйста, свяжитесь с **@arsLan**, если платежная система требует персональные данные получателя.</string>
+    <string name="DP_Donate_Method_Surname">Пожалуйста, свяжитесь с **@opengram**, если платежная система требует персональные данные получателя.</string>
 
     <string name="DP_Donate_Exclusive">Эксклюзив для поддержавших</string>
     <string name="DP_Donate_ExclusiveDesc">Поддержите проект и откройте доступ ко всем возможностям.</string>

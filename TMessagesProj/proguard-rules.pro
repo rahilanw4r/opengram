@@ -78,7 +78,7 @@
 -keepclassmembernames,allowshrinking class org.telegram.ui.Cells.* { <fields>; }
 -keepclassmembernames,allowshrinking class org.telegram.ui.Components.* { <fields>; }
 
-# Keep Cherrygram fields name
+# Keep Opengram fields name
 -keep class com.fasterxml.jackson.**{ *; }
 
 -keepclassmembers class org.telegram.tgnet.** {

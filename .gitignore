@@ -35,7 +35,8 @@ TMessagesProj_AppStandalone/afat/
 TMessagesProj_AppHuawei/afat/
 TMessagesProj/jni/ffmpeg/build_android
 Keytool.zip
-Cherrygram.jks
+Opengram.jks
+.vscode/
 mykey.jks
 actions-runner
 secrets_for_ci.env

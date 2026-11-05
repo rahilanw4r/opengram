@@ -149,7 +149,6 @@ Opengram is licensed under the **GNU General Public License v2.0 or later** ([GP
 ### Acknowledgments & Upstream Credits
 Opengram builds upon the work of several fantastic open-source projects:
 - [Telegram for Android](https://github.com/DrKLO/Telegram) by Nikolai Kudashov and Telegram LLC
-- [Cherrygram](https://github.com/arsLan4k1390/Cherrygram) by arsLan4k1390
 - [Nekogram](https://gitlab.com/Nekogram/Nekogram) & [Catogram](https://github.com/Catogram/Catogram)
 - [exteraGram](https://github.com/exteraSquad/exteraGram) & [OwlGram](https://github.com/OwlGramDev/OwlGram)
 - [Telegram Monet](https://github.com/c3r5b8/Telegram-Monet) & [Telegraher](https://github.com/nikitasius/Telegraher)
