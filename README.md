@@ -1,160 +1,145 @@
-# 🚀 Opengram for Android
+# Opengram for Android
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rahilanw4r/opengram/main/TMessagesProj/src/main/res-cherrygram/mipmap-xxhdpi/icon_launcher_cherry.webp" alt="Opengram Logo" width="128" height="128" />
+  <img src="assets/opengram-logo.svg" alt="Opengram logo" width="140" />
 </p>
 
 <p align="center">
-  <b>A modern, high-performance, and privacy-respecting Telegram client for Android.</b>
+  <strong>An open-source Android client for Telegram, built around customization, usability, and control.</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/rahilanw4r/opengram/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-GPL%20v2%2B-blue.svg?style=for-the-badge" alt="License: GPL v2+" /></a>
-  <a href="https://developer.android.com"><img src="https://img.shields.io/badge/Platform-Android%207.0%2B%20(API%2024%2B)-green.svg?style=for-the-badge&logo=android" alt="Android 7.0+" /></a>
-  <a href="https://kotlinlang.org"><img src="https://img.shields.io/badge/Kotlin-2.2-purple.svg?style=for-the-badge&logo=kotlin" alt="Kotlin" /></a>
-  <a href="https://github.com/rahilanw4r/opengram/stargazers"><img src="https://img.shields.io/github/stars/rahilanw4r/opengram?style=for-the-badge" alt="Stars" /></a>
-  <a href="https://github.com/rahilanw4r/opengram/network/members"><img src="https://img.shields.io/github/forks/rahilanw4r/opengram?style=for-the-badge" alt="Forks" /></a>
+  <a href="LICENSE">GPL-2.0-or-later</a> · Android · Kotlin
 </p>
 
 ---
 
-## 📖 Overview
+## Overview
 
-**Opengram** is a refined, open-source Android client for the Telegram messaging platform. Built on the solid foundation of official Telegram sources and community improvements, Opengram focuses on user sovereignty, advanced customization, clean UI design, and maximum speed without compromising privacy.
+Opengram is an independently developed Android client based on Telegram for Android and community-developed enhancements. It adds customization and extra tools while retaining Telegram's messaging platform.
 
-> [!NOTE]  
-> Opengram is an unofficial client developed independently and is not affiliated with Telegram FZ-LLC.
+Opengram is an unofficial third-party client. It is not affiliated with, endorsed by, or sponsored by Telegram FZ-LLC.
 
----
+## Features
 
-## ✨ Key Highlights
+- **Interface customization:** Material You / Dynamic Color support, icon themes, chat bubble options, status-bar settings, drawer customization, and folder-tab controls.
+- **Privacy controls:** Biometric protection for supported sensitive areas, Ghost Mode preferences, and configurable read-receipt behavior.
+- **Media and camera:** CameraX integration, Media3 / ExoPlayer playback, FFmpeg-based media support, and message rendering for Markdown and LaTeX.
+- **Built-in assistant:** Google Gemini integration for supported AI chat, summarization, and translation workflows.
+- **Power-user tools:** JSON message-payload inspection, multi-account support, and standalone distribution with direct-update functionality.
 
-- **🎨 Advanced Appearance & Theming**
-  - Full Material You / Dynamic Colors (Monet) support across the entire app.
-  - Solar and OneUI icon sets, custom chat bubbles, and configurable status bars.
-  - Granular drawer navigation personalization and customized folder tabs.
+Feature availability can vary by build flavor and configuration.
 
-- **🔒 Privacy & Autonomy**
-  - Completely disarmed remote locks, anti-rebrand checks, and tracking routines.
-  - Native biometric authentication (`CGBiometricPrompt`) for sensitive conversations.
-  - Configurable Ghost Mode preferences and granular control over read receipts.
+## Download
 
-- **⚡ Media & Camera Enhancements**
-  - Modern Jetpack CameraX integration (`CameraXView`) supporting high-framerate capture, lens switching, and stabilization.
-  - Integrated ExoPlayer / Media3 engine with native FFmpeg audio/video decoders.
-  - Markdown and LaTeX (`jlatexmath`) rendering directly inside message bubbles.
+Check the [Releases](https://github.com/rahilanw4r/opengram/releases) page for available builds.
 
-- **🤖 Built-in AI Capabilities**
-  - Integrated Google Gemini AI chat assistant for rapid queries, summarization, and translation.
+## Build from source
 
-- **🛠 Developer & Power-User Tools**
-  - In-app JSON payload inspector for message packets.
-  - Fast account switching with multi-account support.
-  - Independent direct updates and standalone distribution capabilities.
+### Requirements
 
----
+| Component | Version |
+|---|---|
+| JDK | 17 |
+| Android SDK | API 36 |
+| Android Build Tools | 36.0.0 |
+| Android NDK | 27.2.12479018 |
+| CMake | 3.22.1 |
+| Gradle | 8.13 (Gradle Wrapper) |
 
-## 🏗 Repository Architecture
+### 1. Clone the repository
 
-```text
-opengram/
-├── TMessagesProj/               # Core Telegram Android library (UI, controllers, MTProto network engine)
-│   ├── jni/                     # C/C++ native source code (BoringSSL, WebRTC, FFmpeg, tlottie, TDLib)
-│   └── src/main/java/
-│       ├── org/telegram/        # Telegram core UI, activities, controllers, and services
-│       └── uz/unnarsx/cherrygram/ # Custom Opengram features, camera, preferences, and hooks
-├── TMessagesProj_App/           # Google Play Store application flavor
-├── TMessagesProj_AppStandalone/ # Direct-download standalone APK (with self-updater)
-├── TMessagesProj_AppHuawei/     # Huawei AppGallery distribution flavor
-├── TMessagesProj_Modules/media/ # AndroidX Media3 / ExoPlayer multimedia subsystem
-├── buildSrc/                    # Custom Gradle plugins and TL-schema code generation tools
-└── Dockerfile                   # Specification for reproducible builds
-```
-
----
-
-## 🛠 Prerequisites
-
-To compile Opengram from source, your development environment must include:
-
-- **JDK**: Java Development Kit 17 (recommended: OpenJDK 17 or Eclipse Temurin)
-- **Android SDK**: API 36 (`compileSdkVersion 36`, `targetSdkVersion 36`, `minSdkVersion 24`)
-- **Android Build Tools**: `36.0.0`
-- **Android NDK**: `27.2.12479018`
-- **CMake**: `3.22.1`
-- **Gradle**: `8.13` (managed via included Gradle Wrapper)
-
----
-
-## 🚀 Building from Source
-
-### 1. Clone the Repository
-
-Clone Opengram together with its submodules:
+Clone the repository and its submodules:
 
 ```bash
 git clone --recursive https://github.com/rahilanw4r/opengram.git
 cd opengram
 ```
 
-If you previously cloned without `--recursive`, initialize submodules manually:
+If the repository was cloned without submodules:
 
 ```bash
 git submodule update --init --recursive --depth=1
 ```
 
-### 2. Configure Telegram API Credentials
+### 2. Configure Telegram API credentials
 
-Telegram requires every third-party application to use its own API credentials:
+Register an application at [my.telegram.org](https://my.telegram.org) to obtain your own Telegram API ID and API hash.
 
-1. Obtain your `api_id` and `api_hash` by registering an application at [my.telegram.org](https://my.telegram.org).
-2. Open `TMessagesProj/src/main/java/uz/unnarsx/cherrygram/Extra.kt` and insert your credentials:
+Configure the credentials in:
+
+`TMessagesProj/src/main/java/uz/unnarsx/cherrygram/Extra.kt`
+
+Example:
 
 ```kotlin
 object Extra {
     fun getAppID(): Int = YOUR_APP_ID
     fun getAppHash(): String = "YOUR_APP_HASH"
-    // ...
 }
 ```
 
-### 3. Setup Firebase Push Notifications (Optional for Local Builds)
+Do not commit personal credentials or secrets to a public repository.
+
+### 3. Configure Firebase (optional)
+
+Firebase is optional for local builds that do not require push notifications.
 
 1. Create a project in the [Firebase Console](https://console.firebase.google.com/).
-2. Add an Android app with package ID `org.gram.messenger` (and `org.gram.messenger.beta` for beta builds).
-3. Download `google-services.json` and place it in the `TMessagesProj/` folder.
+2. Register the Android application package used by your build.
+3. Place the corresponding `google-services.json` file in `TMessagesProj/`.
 
-### 4. Build the Project
+Keep Firebase configuration and any associated credentials out of public commits when they are private to your project.
 
-You can compile using Android Studio or directly via the command line:
+### 4. Build
 
-#### Debug Build (Fast Compilation)
+Debug APK:
+
 ```bash
 ./gradlew :TMessagesProj_App:assembleDebug
 ```
 
-#### Standalone Release APK
+Standalone APK:
+
 ```bash
 ./gradlew :TMessagesProj_AppStandalone:assembleAfatStandalone
 ```
 
-The resulting APKs will be located in `TMessagesProj_App/build/outputs/apk/` and `TMessagesProj_AppStandalone/build/outputs/apk/`.
+Build outputs are generated under the relevant module's `build/outputs/apk/` directory.
 
----
+## Repository structure
 
-## 📄 License & Attribution
+```text
+opengram/
+├── TMessagesProj/                # Telegram Android core and custom features
+├── TMessagesProj_App/            # Main application flavor
+├── TMessagesProj_AppStandalone/  # Standalone distribution flavor
+├── TMessagesProj_AppHuawei/      # Huawei distribution flavor
+├── TMessagesProj_Modules/media/  # Media3 / ExoPlayer components
+├── buildSrc/                     # Custom Gradle build logic
+└── Dockerfile                    # Build environment specification
+```
 
-Opengram is licensed under the **GNU General Public License v2.0 or later** ([GPL-2.0-or-later](LICENSE)).
+## License
 
-### Acknowledgments & Upstream Credits
-Opengram builds upon the work of several fantastic open-source projects:
-- [Telegram for Android](https://github.com/DrKLO/Telegram) by Nikolai Kudashov and Telegram LLC
-- [Nekogram](https://gitlab.com/Nekogram/Nekogram) & [Catogram](https://github.com/Catogram/Catogram)
-- [exteraGram](https://github.com/exteraSquad/exteraGram) & [OwlGram](https://github.com/OwlGramDev/OwlGram)
-- [Telegram Monet](https://github.com/c3r5b8/Telegram-Monet) & [Telegraher](https://github.com/nikitasius/Telegraher)
+Opengram is licensed under the [GNU General Public License v2.0 or later](LICENSE).
+
+## Acknowledgments
+
+Opengram builds on Telegram for Android and incorporates ideas or work from open-source projects including:
+
+- [Telegram for Android](https://github.com/DrKLO/Telegram)
+- [Nekogram](https://gitlab.com/Nekogram/Nekogram)
+- [Catogram](https://github.com/Catogram/Catogram)
+- [exteraGram](https://github.com/exteraSquad/exteraGram)
+- [OwlGram](https://github.com/OwlGramDev/OwlGram)
+- [Telegram Monet](https://github.com/c3r5b8/Telegram-Monet)
+- [Telegraher](https://github.com/nikitasius/Telegraher)
+
+Please refer to the upstream projects and their licenses for applicable attribution and licensing details.
 
 ---
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/rahilanw4r">Rahil Anwar</a> and the Open Source Community.
+  Maintained by <a href="https://github.com/rahilanw4r">Rahil Anwar</a> and contributors.
 </p>
