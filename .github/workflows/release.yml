@@ -1,0 +1,105 @@
+name: Build and Release Opengram APK
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Release Tag (e.g. v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build & Release Opengram
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Android SDK & NDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android Build Tools & NDK
+        run: |
+          yes | sdkmanager --licenses || true
+          sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;27.2.12479018" "cmake;3.22.1"
+
+      - name: Checkout Submodules
+        run: |
+          mkdir -p TMessagesProj_Modules/media TMessagesProj/lib/jlatexmath TMessagesProj/jni/third_party/libyuv TMessagesProj/jni/third_party/absl
+          git clone --depth 1 https://github.com/Arseny271/media.git TMessagesProj_Modules/media
+          git clone --depth 1 https://github.com/dkaraush/jlatexmath-android.git TMessagesProj/lib/jlatexmath
+          git clone --depth 1 https://chromium.googlesource.com/libyuv/libyuv TMessagesProj/jni/third_party/libyuv
+          git clone --depth 1 https://github.com/abseil/abseil-cpp.git TMessagesProj/jni/third_party/absl
+
+      - name: Generate Release Keystore
+        run: |
+          keytool -genkey -v -keystore Your_Key.jks \
+            -alias Your_Alias \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -storepass Your_Password \
+            -keypass Your_Password \
+            -dname "CN=Opengram, OU=Opengram, O=Opengram, L=City, S=State, C=US"
+
+      - name: Grant Execute Permission to Gradle Wrapper
+        run: chmod +x gradlew
+
+      - name: Build Standalone APK
+        run: |
+          ./gradlew :TMessagesProj_AppStandalone:assembleAfatStandalone --stacktrace || \
+          ./gradlew :TMessagesProj_AppStandalone:assembleAfatDebug --stacktrace
+
+      - name: Locate and Prepare APK
+        id: prepare_apk
+        run: |
+          APK_PATH=$(find TMessagesProj_AppStandalone/build/outputs/apk/ -name "*.apk" | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            echo "Searching all modules for output APKs..."
+            APK_PATH=$(find . -path "*/build/outputs/apk/*" -name "*.apk" | head -n 1)
+          fi
+          echo "Found APK at: $APK_PATH"
+          cp "$APK_PATH" Opengram.apk
+          echo "apk_path=Opengram.apk" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release and Upload APK
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag_name }}
+          name: Opengram ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag_name }}
+          draft: false
+          prerelease: false
+          files: Opengram.apk
+          body: |
+            ### 🚀 Opengram Release
+
+            Welcome to the official release of **Opengram**!
+
+            #### ✨ Key Highlights
+            - **Ghost Mode & Stealth Suite**: Read receipts suppression, hidden typing status, anonymous story views, and unrestricted screenshots.
+            - **Unlimited Pinned Chats**: Pin up to 100 chats per folder and in the main list.
+            - **Free Voice-to-Text Transcription**: Enabled for all voice and video notes.
+            - **Clean Forwarding**: Forward messages without sender quotes or headers.
+            - **Material You / Monet Theming & AMOLED**: Smooth dynamic theming and high-performance animations.
+
+            #### 📲 Installation
+            1. Download `Opengram.apk` below.
+            2. Tap to install on your Android device (Android 7.0+).
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
