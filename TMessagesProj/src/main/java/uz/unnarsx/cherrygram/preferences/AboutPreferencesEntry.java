@@ -103,46 +103,14 @@ public class AboutPreferencesEntry extends BaseCGPreferencesEntry {
         items.add(UItem.asShadow(null));
 
         items.add(UItem.asHeader(getString(R.string.CGP_Links)));
-        items.add(UItem.asButton(channelRow, R.drawable.msg_channel_solar, getString(R.string.CGP_ToChannel)));
-        items.add(UItem.asButton(betaChannelRow, R.drawable.msg_channel_solar, getString(R.string.CGP_ToBetaChannel)));
-        if (!cherrygramSupportChatLoaded) {
-            items.add(UItem.asShadow(null));
+        if (!android.text.TextUtils.isEmpty(Constants.CG_CHANNEL_USERNAME)) {
+            items.add(UItem.asButton(channelRow, R.drawable.msg_channel_solar, getString(R.string.CGP_ToChannel)));
+        }
+        if (!android.text.TextUtils.isEmpty(Constants.CG_BETA_APKS_CHANNEL_USERNAME)) {
+            items.add(UItem.asButton(betaChannelRow, R.drawable.msg_channel_solar, getString(R.string.CGP_ToBetaChannel)));
+        }
+        if (!android.text.TextUtils.isEmpty(Constants.CG_CHAT_USERNAME)) {
             items.add(UItem.asButton(chatRow, R.drawable.msg_discuss_solar, getString(R.string.CGP_ToChat)));
-            items.add(UItem.asButton(offtopicChatRow, R.drawable.msg_discuss_solar, getString(R.string.CGP_ToOfftopicChat)));
-            items.add(UItem.asShadow(null));
-
-            getChatWithFallback(Constants.Cherrygram_Support, Constants.CG_CHAT_USERNAME,
-                    cgCommunity -> {
-                        if (getParentActivity() == null) return;
-
-                        cherrygramSupportChatLoaded = true;
-                        cherrygramSupportChat = cgCommunity;
-                        updateRows(true);
-                    }
-            );
-        } else if (cherrygramSupportChat != null && cherrygramSupportChat.linked_community_id != 0) {
-            TLRPC.Chat linkedCommunity = getMessagesController().getChat(cherrygramSupportChat.linked_community_id);
-            Activity parentActivity = getParentActivity();
-
-            if (linkedCommunity != null && parentActivity != null) {
-                CommunityLinkView communityLinkView = new CommunityLinkView(parentActivity, getResourceProvider());
-                communityLinkView.setChat(currentAccount, linkedCommunity);
-
-                items.add(UItem.asShadow(null));
-                items.add(UItem.asCustom(communityRow, communityLinkView));
-                items.add(UItem.asShadow(null));
-            } else {
-                items.add(UItem.asShadow(null));
-
-                items.add(UItem.asButton(chatRow, R.drawable.msg_discuss_solar, getString(R.string.CGP_ToChat)));
-                items.add(UItem.asButton(offtopicChatRow, R.drawable.msg_discuss_solar, getString(R.string.CGP_ToOfftopicChat)));
-                items.add(UItem.asShadow(null));
-            }
-        } else {
-            items.add(UItem.asShadow(null));
-            items.add(UItem.asButton(chatRow, R.drawable.msg_discuss_solar, getString(R.string.CGP_ToChat)));
-            items.add(UItem.asButton(offtopicChatRow, R.drawable.msg_discuss_solar, getString(R.string.CGP_ToOfftopicChat)));
-            items.add(UItem.asShadow(null));
         }
 
         if (!CherrygramCoreConfig.isStandalonePremiumBuild()) {
@@ -157,12 +125,16 @@ public class AboutPreferencesEntry extends BaseCGPreferencesEntry {
             );
         }
 
-        items.add(UItem.asButton(crowdinRow, R.drawable.msg_translate_solar, getString(R.string.CGP_Crowdin), "Crowdin")
-                .slug("crowdin")
-        );
-        items.add(UItem.asButton(policyRow, R.drawable.msg_policy_solar, getString(R.string.PrivacyPolicy))
-                .slug("policy")
-        );
+        if (!android.text.TextUtils.isEmpty(Constants.CG_CROWDIN_URL)) {
+            items.add(UItem.asButton(crowdinRow, R.drawable.msg_translate_solar, getString(R.string.CGP_Crowdin), "Crowdin")
+                    .slug("crowdin")
+            );
+        }
+        if (!android.text.TextUtils.isEmpty(Constants.CG_PRIVACY_URL)) {
+            items.add(UItem.asButton(policyRow, R.drawable.msg_policy_solar, getString(R.string.PrivacyPolicy))
+                    .slug("policy")
+            );
+        }
         items.add(UItem.asShadow(null));
     }
 

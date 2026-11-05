@@ -58,6 +58,7 @@ public class PrivacyPreferencesEntry extends BaseCGPreferencesEntry {
     private final int hideTypingRow = 21;
     private final int hideStoriesViewRow = 22;
     private final int allowScreenshotsRow = 23;
+    private final int hideAppSwitcherPreviewRow = 24;
 
     private final int hideArchivedStoriesRow = 1390;
 
@@ -92,6 +93,9 @@ public class PrivacyPreferencesEntry extends BaseCGPreferencesEntry {
         );
         items.add(SettingsHelper.asSwitchCG(allowScreenshotsRow, "Allow Screenshots Everywhere", "Permit screenshots in secret chats and self-destruct media")
                 .setChecked(CherrygramPrivacyConfig.INSTANCE.getAllowScreenshotsAnywhere())
+        );
+        items.add(SettingsHelper.asSwitchCG(hideAppSwitcherPreviewRow, "Hide App Switcher Preview", "Mask app contents in Android Recent Apps / Task Switcher")
+                .setChecked(CherrygramPrivacyConfig.INSTANCE.getHideAppSwitcherPreview())
         );
         items.add(UItem.asShadow(null));
 
@@ -200,6 +204,10 @@ public class PrivacyPreferencesEntry extends BaseCGPreferencesEntry {
         } else if (item.id == allowScreenshotsRow) {
             CherrygramPrivacyConfig.INSTANCE.setAllowScreenshotsAnywhere(!CherrygramPrivacyConfig.INSTANCE.getAllowScreenshotsAnywhere());
             SettingsHelper.updateCheckState(view, CherrygramPrivacyConfig.INSTANCE.getAllowScreenshotsAnywhere());
+        } else if (item.id == hideAppSwitcherPreviewRow) {
+            CherrygramPrivacyConfig.INSTANCE.setHideAppSwitcherPreview(!CherrygramPrivacyConfig.INSTANCE.getHideAppSwitcherPreview());
+            SettingsHelper.updateCheckState(view, CherrygramPrivacyConfig.INSTANCE.getHideAppSwitcherPreview());
+            org.telegram.messenger.NotificationCenter.getGlobalInstance().postNotificationName(org.telegram.messenger.NotificationCenter.didSetPasscode, false);
         } else if (item.id == hideArchivedStoriesRow) {
             CherrygramPrivacyConfig.INSTANCE.setHideArchivedStories(!CherrygramPrivacyConfig.INSTANCE.getHideArchivedStories());
             SettingsHelper.updateCheckState(view, CherrygramPrivacyConfig.INSTANCE.getHideArchivedStories());

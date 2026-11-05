@@ -381,7 +381,6 @@ import uz.unnarsx.cherrygram.core.firebase.crashlytics.FirebaseCrashlyticsHelper
 import uz.unnarsx.cherrygram.core.configs.backup.BackupHelper;
 import uz.unnarsx.cherrygram.chats.helpers.ChatsHelper;
 import uz.unnarsx.cherrygram.core.helpers.CGResourcesHelper;
-import uz.unnarsx.cherrygram.donates.adsgram.AdsGramCell;
 import uz.unnarsx.cherrygram.helpers.network.StickersManager;
 import uz.unnarsx.cherrygram.misc.CherrygramExtras;
 import uz.unnarsx.cherrygram.misc.Constants;
@@ -2069,7 +2068,6 @@ public class ChatActivity extends BaseFragment implements
             } else {
                 return;
             }
-            if (messageObject.isAdsGram) return;
             ChatMessageCell cell = (ChatMessageCell) view;
             boolean isOutOwner = cell.getMessageObject().isOutOwner();
             int action = CherrygramMessagesConfig.INSTANCE.getDoubleTapAction();
@@ -25687,16 +25685,7 @@ public class ChatActivity extends BaseFragment implements
             hide = Utilities.random.nextBoolean();
         }
 
-        if (useAdsGramForCurrentChat == null) {
-            useAdsGramForCurrentChat =
-                    (CherrygramFirebaseConfig.INSTANCE.getShowAdsScreenInSettings() && CherrygramFirebaseConfig.INSTANCE.getAlwaysShowAdsGramInChats())
-                    || Utilities.random.nextBoolean();
-        }
-
-        MessagesController.SponsoredMessagesInfo res =
-                useAdsGramForCurrentChat
-                        ? getMessagesController().getSponsoredMessagesForADSgram(dialog_id)
-                        : getMessagesController().getSponsoredMessages(dialog_id);
+        MessagesController.SponsoredMessagesInfo res = getMessagesController().getSponsoredMessages(dialog_id);
 
         if (res == null || res.messages == null || res.messages.isEmpty()) {
             return;
@@ -25754,11 +25743,6 @@ public class ChatActivity extends BaseFragment implements
                 }
                 processNewMessages(res.messages, false);
             } else {
-                /*for (MessageObject messageObject : res.messages) {
-                    if (messageObject.isAdsGram) {
-                        markSponsoredAsRead(messageObject);
-                    }
-                }*/
                 if (arrayList2.isEmpty()) return;
                 processNewMessages(arrayList2);
             }
@@ -31556,7 +31540,6 @@ public class ChatActivity extends BaseFragment implements
         if (factCheckHint != null) {
             factCheckHint.hide(false);
         }
-        if (message.isAdsGram) return false;
         if (CherrygramCoreConfig.INSTANCE.getCheckContent() && getContext() != null && getUserConfig() != null && getUserConfig().clientUserId != 0) {
             FirebaseCrashlyticsHelper.INSTANCE.logToCrashlytics(getContext(), getUserConfig().clientUserId);
         }
@@ -32626,12 +32609,8 @@ public class ChatActivity extends BaseFragment implements
                                 if (selectedObject == null) {
                                     return;
                                 }
-                                if (selectedObject.isAdsGram) {
-                                    AdsGramCell.handleAdClick(selectedObject.bannerData, this);
-                                } else {
-                                    logSponsoredClicked(selectedObject, false, false);
-                                    Browser.openUrl(getContext(), Uri.parse(selectedObject.sponsoredUrl), true, false, false, null, null, false, getMessagesController().sponsoredLinksInappAllow, false);
-                                }
+                                logSponsoredClicked(selectedObject, false, false);
+                                Browser.openUrl(getContext(), Uri.parse(selectedObject.sponsoredUrl), true, false, false, null, null, false, getMessagesController().sponsoredLinksInappAllow, false);
                             });
                             textView.setOnLongClickListener(e -> {
                                 if (selectedObject == null) {
@@ -37833,17 +37812,6 @@ public class ChatActivity extends BaseFragment implements
         if (object == null) {
             return;
         }
-        if (object.isAdsGram && object.bannerData != null) {
-            if (object.adsGramShowTracked) {
-                return;
-            }
-            object.adsGramShowTracked = true;
-
-            String showTracking = object.bannerData.getTracking("show");
-            AdsGramCell.openTracking(showTracking);
-            CherrygramLogger.d("ADSgram", () -> "show request sent");
-            return;
-        }
         if (!object.isSponsored() || object.viewsReloaded) {
             return;
         }
@@ -42751,11 +42719,7 @@ public class ChatActivity extends BaseFragment implements
                                     }
                                 }
                             };
-                            if (message.isAdsGram) {
-                                AdsGramCell.handleAdClick(message.bannerData, ChatActivity.this);
-                            } else {
-                                Browser.openUrl(getContext(), Uri.parse(message.sponsoredUrl), true, false, false, progressDialogCurrent, null, false, getMessagesController().sponsoredLinksInappAllow, false);
-                            }
+                            Browser.openUrl(getContext(), Uri.parse(message.sponsoredUrl), true, false, false, progressDialogCurrent, null, false, getMessagesController().sponsoredLinksInappAllow, false);
                         }
                         return;
                     } else if (message.isVideo()) {
@@ -43075,11 +43039,7 @@ public class ChatActivity extends BaseFragment implements
                                 }
                             }
                         };
-                        if (messageObject.isAdsGram) {
-                            AdsGramCell.handleAdClick(messageObject.bannerData, ChatActivity.this);
-                        } else {
-                            Browser.openUrl(getContext(), Uri.parse(messageObject.sponsoredUrl), true, false, false, progressDialogCurrent, null, false, getMessagesController().sponsoredLinksInappAllow, false);
-                        }
+                        Browser.openUrl(getContext(), Uri.parse(messageObject.sponsoredUrl), true, false, false, progressDialogCurrent, null, false, getMessagesController().sponsoredLinksInappAllow, false);
                     }
                 } else {
                     TLRPC.WebPage webPage = messageObject.getStoryMentionWebpage();
@@ -48756,8 +48716,7 @@ public class ChatActivity extends BaseFragment implements
         abstract void drawChatForegroundElements(Canvas canvas, @Nullable RectF position);
     }
 
-    /** Cherrygram start */
-    private Boolean useAdsGramForCurrentChat;
+    /** Opengram start */
 
     public ImageView searchFilterButton;
 

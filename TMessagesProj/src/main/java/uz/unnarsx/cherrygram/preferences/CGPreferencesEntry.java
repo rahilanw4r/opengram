@@ -43,18 +43,14 @@ import uz.unnarsx.cherrygram.preferences.helpers.TelegramSettingsHelper;
 
 public class CGPreferencesEntry extends BaseCGPreferencesEntry {
 
-    private final int generalRow = 1;
-    private final int appearanceRow = 2;
-    private final int chatsRow = 3;
-    private final int cameraRow = 4;
-    private final int experimentalRow = 5;
+    private final int appearanceRow = 1;
+    private final int chatsRow = 2;
+    private final int messagesRow = 3;
+    private final int mediaRow = 4;
+    private final int notificationsRow = 5;
     private final int privacyRow = 6;
-    private final int aboutRow = 7;
-
-    private final int supportRow = 8;
-    private final int proxyRow = 9;
-
-    private final int alternativeSupportRow = 10;
+    private final int callsRow = 7;
+    private final int advancedRow = 8;
 
     @Override
     protected CharSequence getTitle() {
@@ -79,17 +75,8 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
     @Override
     protected void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
         items.add(UItem.asHeader(getString(R.string.Settings)));
-        items.add(
-                SettingsActivity.SettingCell.Factory.of(
-                        generalRow,
-                        IconBackgroundColors.ORANGE_DEEP.bottom, IconBackgroundColors.RED.bottom,
-                        R.drawable.settings_filled_solar,
-                        getString(R.string.AP_Header_General),
-                        getString(R.string.CGP_General_Desc),
-                        true
-                )
-                .slug(DeeplinkHelper.DeepLinksRepo.CG_General)
-        );
+
+        // 1. Appearance
         Pair<Integer, Integer> colors = TelegramSettingsHelper.Helper.INSTANCE.getProfileButtonColor(getUserConfig().getCurrentUser(), true);
         items.add(
                 SettingsActivity.SettingCell.Factory.of(
@@ -103,6 +90,8 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
                 )
                 .slug(DeeplinkHelper.DeepLinksRepo.CG_Appearance)
         );
+
+        // 2. Chats
         items.add(
                 SettingsActivity.SettingCell.Factory.of(
                         chatsRow, IconBackgroundColors.ORANGE.top, IconBackgroundColors.ORANGE.bottom,
@@ -113,10 +102,25 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
                 )
                 .slug(DeeplinkHelper.DeepLinksRepo.CG_Chats)
         );
+
+        // 3. Messages
         items.add(
                 SettingsActivity.SettingCell.Factory.of(
-                        cameraRow,
-                        0xFFE54C7F, 0xFFA33156,
+                        messagesRow,
+                        IconBackgroundColors.GREEN.top, IconBackgroundColors.GREEN.bottom,
+                        R.drawable.settings_filled_solar,
+                        getString(R.string.MessagesSettings),
+                        "Message menu, send confirmation, actions & filters",
+                        true
+                )
+                .slug(DeeplinkHelper.DeepLinksRepo.CG_Messages)
+        );
+
+        // 4. Media
+        items.add(
+                SettingsActivity.SettingCell.Factory.of(
+                        mediaRow,
+                        0xFF0288D1, 0xFF01579B,
                         R.drawable.settings_camera_filled_solar,
                         getString(R.string.CP_Category_Camera),
                         getString(R.string.CGP_Camera_Desc),
@@ -124,19 +128,21 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
                 )
                 .slug(DeeplinkHelper.DeepLinksRepo.CG_Camera)
         );
-        if (CherrygramExperimentalConfig.INSTANCE.getUse_CG_OOMHandler()) {
-            items.add(
-                    SettingsActivity.SettingCell.Factory.of(
-                            experimentalRow,
-                            IconBackgroundColors.PURPLE.top, IconBackgroundColors.PURPLE.bottom,
-                            R.drawable.settings_tube_filled_solar,
-                            getString(R.string.EP_Category_Experimental),
-                            getString(R.string.CGP_Experimental_Desc),
-                            true
-                    )
-                    .slug(DeeplinkHelper.DeepLinksRepo.CG_Experimental)
-            );
-        }
+
+        // 5. Notifications
+        items.add(
+                SettingsActivity.SettingCell.Factory.of(
+                        notificationsRow,
+                        IconBackgroundColors.RED.top, IconBackgroundColors.RED.bottom,
+                        R.drawable.settings_sounds,
+                        getString(R.string.Notifications),
+                        "Mute non-contacts, mentions & background service",
+                        true
+                )
+                .slug(DeeplinkHelper.DeepLinksRepo.CG_General)
+        );
+
+        // 6. Privacy & Security
         items.add(
                 SettingsActivity.SettingCell.Factory.of(
                         privacyRow,
@@ -148,76 +154,54 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
                 )
                 .slug(DeeplinkHelper.DeepLinksRepo.CG_Privacy)
         );
+
+        // 7. Calls
         items.add(
                 SettingsActivity.SettingCell.Factory.of(
-                        aboutRow,
-                        0xFFE54C7F, 0xFFA33156,
+                        callsRow,
+                        IconBackgroundColors.GREEN_DEEP.top, IconBackgroundColors.GREEN_DEEP.bottom,
+                        R.drawable.settings_calls,
+                        getString(R.string.Calls),
+                        "Audio source routing & call recording transparency",
+                        true
+                )
+                .slug("cg_calls")
+        );
+
+        // 8. Advanced & About
+        items.add(
+                SettingsActivity.SettingCell.Factory.of(
+                        advancedRow,
+                        IconBackgroundColors.PURPLE.top, IconBackgroundColors.PURPLE.bottom,
                         R.drawable.settings_info_filled_solar,
-                        getString(R.string.CGP_Header_About),
+                        "Advanced & About",
                         getString(R.string.CGP_Header_About_Desc),
                         true
                 )
                 .slug(DeeplinkHelper.DeepLinksRepo.CG_About)
         );
-        items.add(UItem.asShadow(null));
 
-        items.add(UItem.asHeader(getString(R.string.DP_Support)));
-        items.add(
-                SettingsActivity.SettingCell.Factory.of(
-                        supportRow,
-                        0xFFB659FF, 0xFF617CFF,
-                        R.drawable.settings_support_filled_solar,
-                        applyProSpan(getString(R.string.DP_DonateBadge), getResourceProvider())
-                )
-                .slug(DeeplinkHelper.DeepLinksRepo.CG_Support_Force)
-        );
-        if (!getConnectionsManager().isTestBackend()) {
-            items.add(
-                    SettingsActivity.SettingCell.Factory.of(
-                            alternativeSupportRow,
-                            0xFFF6538A, 0xFF581668,
-                            R.drawable.settings_stars,
-                            getString(R.string.AS_Header)
-                    )
-                    .slug(DeeplinkHelper.DeepLinksRepo.CG_Alternative_Support)
-            );
-        }
-        if (CherrygramFirebaseConfig.INSTANCE.getShowProxyInSettings() && CGChatMenuInjector.INSTANCE.showProxyButton()) {
-            items.add(UItem.asShadow(null));
-            items.add(
-                    SettingsActivity.SettingCell.Factory.of(
-                            proxyRow,
-                            IconBackgroundColors.BLUE_DEEP.top, IconBackgroundColors.BLUE_DEEP.bottom,
-                            R.drawable.settings_language,
-                            getString(R.string.Proxy)
-                    )
-            );
-        }
         items.add(UItem.asShadow(null));
     }
 
     @Override
     protected void onClick(UItem item, View view, int position, float x, float y) {
-        if (item.id == generalRow) {
-            CherrygramPreferencesNavigator.INSTANCE.createGeneral(this);
-        } else if (item.id == appearanceRow) {
+        if (item.id == appearanceRow) {
             CherrygramPreferencesNavigator.INSTANCE.createAppearance(this);
         } else if (item.id == chatsRow) {
             CherrygramPreferencesNavigator.INSTANCE.createChats(this);
-        } else if (item.id == cameraRow) {
+        } else if (item.id == messagesRow) {
+            CherrygramPreferencesNavigator.INSTANCE.createMessages(this);
+        } else if (item.id == mediaRow) {
             CherrygramPreferencesNavigator.INSTANCE.createCamera(this);
-        } else if (item.id == experimentalRow) {
-            CherrygramPreferencesNavigator.INSTANCE.createExperimental(this);
+        } else if (item.id == notificationsRow) {
+            CherrygramPreferencesNavigator.INSTANCE.createGeneral(this);
         } else if (item.id == privacyRow) {
             CherrygramPreferencesNavigator.INSTANCE.createPrivacy(this);
-        } else if (item.id == aboutRow) {
+        } else if (item.id == callsRow) {
+            CherrygramPreferencesNavigator.INSTANCE.createCalls(this);
+        } else if (item.id == advancedRow) {
             CherrygramPreferencesNavigator.INSTANCE.createAbout(this);
-        } else if (item.id == supportRow) {
-            CherrygramPreferencesNavigator.INSTANCE.createDonate(this);
-        } else if (item.id == proxyRow) {
-            Browser.openUrl(getContext(), CherrygramFirebaseConfig.INSTANCE.getProxyURL());
-        } else if (item.id == alternativeSupportRow) {
-            CherrygramPreferencesNavigator.INSTANCE.createAlternativeSupport(this);
         }
     }
 

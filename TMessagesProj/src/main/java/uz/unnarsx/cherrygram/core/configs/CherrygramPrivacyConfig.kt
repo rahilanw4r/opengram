@@ -31,6 +31,7 @@ object CherrygramPrivacyConfig: CoroutineScope by CoroutineScope(
     /** Privacy start */
     var hideProxySponsor by sharedPreferences.boolean("SP_NoProxySponsor", true)
     var googleAnalytics by sharedPreferences.boolean("SP_GoogleAnalytics1", false)
+    var hideAppSwitcherPreview by sharedPreferences.boolean("SP_HideAppSwitcherPreview", false)
 
     /** Ghost Mode & Stealth start */
     var stealthReadMessages by sharedPreferences.boolean("SP_StealthReadMessages", false)

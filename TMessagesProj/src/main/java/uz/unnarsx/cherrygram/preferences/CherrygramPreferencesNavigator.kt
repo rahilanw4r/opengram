@@ -6,7 +6,6 @@
 package uz.unnarsx.cherrygram.preferences
 
 import org.telegram.ui.ActionBar.BaseFragment
-import uz.unnarsx.cherrygram.donates.adsgram.AdsScreen
 import uz.unnarsx.cherrygram.preferences.folders.FoldersPreferencesEntry
 import uz.unnarsx.cherrygram.preferences.tabs.MainTabsPreferencesEntry
 
@@ -54,17 +53,14 @@ object CherrygramPreferencesNavigator {
     fun createPrivacy(fragment: BaseFragment): BaseFragment =
         PrivacyPreferencesEntry().also(fragment::presentFragment)
 
+    fun createCalls(fragment: BaseFragment): BaseFragment =
+        CallsPreferencesEntry().also(fragment::presentFragment)
+
     @JvmOverloads
     fun createDonate(fragment: BaseFragment, force: Boolean = false): BaseFragment =
         DonatesPreferencesEntry().forceShowDonates(force).also(fragment::presentFragment)
 
-    fun createAlternativeSupport(fragment: BaseFragment): BaseFragment =
-        AlternativeSupportScreen().also(fragment::presentFragment)
-
     fun createStars(fragment: BaseFragment, customTitle: String?, userName: String?, type: Int) = fragment.presentFragment(StarsIntroActivityCG(customTitle, userName, type))
-
-    fun createADS(fragment: BaseFragment): BaseFragment =
-        AdsScreen().also(fragment::presentFragment)
 
     fun createAbout(fragment: BaseFragment): BaseFragment =
         AboutPreferencesEntry().also(fragment::presentFragment)
