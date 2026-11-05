@@ -209,7 +209,11 @@ target_include_directories(breakpad PUBLIC
 
 #voip
 include(${CMAKE_HOME_DIRECTORY}/voip/CMakeLists.txt)
-include(${CMAKE_HOME_DIRECTORY}/colorado/CMakeLists.txt)
+# Colorado is an optional native component in some source distributions.
+# Avoid failing CMake configuration when the directory is not included.
+if(EXISTS "${CMAKE_HOME_DIRECTORY}/colorado/CMakeLists.txt")
+    include("${CMAKE_HOME_DIRECTORY}/colorado/CMakeLists.txt")
+endif()
 
 set(NATIVE_LIB "tmessages.49")
 
@@ -324,7 +328,6 @@ target_link_libraries(${NATIVE_LIB}
         EGL
         android
         OpenSLES
-        colorado
         cpufeatures
         breakpad)
 
@@ -333,6 +336,11 @@ target_link_libraries(${NATIVE_LIB}
 #            -Wl,--whole-archive vpxasm -Wl,--no-whole-archive
 #            c)
 #endif()
+
+# Link Colorado only when its optional CMake component was included.
+if(TARGET colorado)
+    target_link_libraries(${NATIVE_LIB} colorado)
+endif()
 
 include(AndroidNdkModules)
 android_ndk_import_module_cpufeatures()
