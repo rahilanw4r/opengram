@@ -9,7 +9,7 @@ on:
       tag_name:
         description: 'Release Tag (e.g. v1.0.0)'
         required: true
-        default: 'v1.0.0'
+        default: 'v1.0.3'
 
 permissions:
   contents: write
@@ -23,6 +23,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
           fetch-depth: 0
 
       - name: Free Disk Space & Configure Swap
@@ -46,54 +47,41 @@ jobs:
           echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
           echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
           echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
-
           SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
-          if [ ! -f "$SDKMANAGER" ]; then
-            SDKMANAGER="sdkmanager"
-          fi
-
-          echo "Using sdkmanager: $SDKMANAGER"
+          if [ ! -f "$SDKMANAGER" ]; then SDKMANAGER="sdkmanager"; fi
           yes | $SDKMANAGER --licenses || true
           $SDKMANAGER "platforms;android-36" "build-tools;36.0.0" "ndk;27.2.12479018" "cmake;3.22.1"
 
-      - name: Checkout Submodules
+      - name: Checkout Build Dependencies
         run: |
-          mkdir -p TMessagesProj_Modules/media TMessagesProj/lib/jlatexmath TMessagesProj/jni/third_party/libyuv TMessagesProj/jni/third_party/absl
-          git clone --depth 1 https://github.com/Arseny271/media.git TMessagesProj_Modules/media
+          set -euxo pipefail
+          # media3 must be checked out from the Telegram-compatible fork/branch.
+          git clone --depth 1 --branch telegram-v1.10.1 https://github.com/Arseny271/media.git TMessagesProj_Modules/media
           git clone --depth 1 https://github.com/dkaraush/jlatexmath-android.git TMessagesProj/lib/jlatexmath
           git clone --depth 1 https://chromium.googlesource.com/libyuv/libyuv TMessagesProj/jni/third_party/libyuv
           git clone --depth 1 https://github.com/abseil/abseil-cpp.git TMessagesProj/jni/third_party/absl
+          test -f TMessagesProj_Modules/media/core_settings.gradle
 
-      - name: Generate Release Keystore
+      - name: Generate CI Release Keystore
         run: |
           keytool -genkey -v -keystore Your_Key.jks \
-            -alias Your_Alias \
-            -keyalg RSA \
-            -keysize 2048 \
-            -validity 10000 \
-            -storepass Your_Password \
-            -keypass Your_Password \
+            -alias Your_Alias -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass Your_Password -keypass Your_Password \
             -dname "CN=Opengram, OU=Opengram, O=Opengram, L=City, S=State, C=US"
 
       - name: Grant Execute Permission to Gradle Wrapper
         run: chmod +x gradlew
 
       - name: Build Standalone APK
-        run: |
-          ./gradlew :TMessagesProj_AppStandalone:assembleAfatStandalone --stacktrace || \
-          ./gradlew :TMessagesProj_AppStandalone:assembleAfatDebug --stacktrace
+        run: ./gradlew :TMessagesProj_AppStandalone:assembleAfatStandalone --stacktrace
 
       - name: Locate and Prepare APK
-        id: prepare_apk
         run: |
-          APK_PATH=$(find TMessagesProj_AppStandalone/build/outputs/apk/ -name "*.apk" | head -n 1)
-          if [ -z "$APK_PATH" ]; then
-            echo "Searching all modules for output APKs..."
-            APK_PATH=$(find . -path "*/build/outputs/apk/*" -name "*.apk" | head -n 1)
-          fi
-          echo "Found APK at: $APK_PATH"
+          set -euo pipefail
+          APK_PATH=$(find TMessagesProj_AppStandalone/build/outputs/apk/ -type f -name "*.apk" | head -n 1)
+          test -n "$APK_PATH"
           cp "$APK_PATH" Opengram.apk
-          ls -la Opengram.apk
+          ls -lh Opengram.apk
 
       - name: Create GitHub Release and Upload APK
         uses: softprops/action-gh-release@v2
@@ -104,21 +92,8 @@ jobs:
           prerelease: false
           files: Opengram.apk
           body: |
-            ### 🚀 Opengram Release
+            ### Opengram Release
 
-            Welcome to the official release of **Opengram**!
-
-            #### ✨ Key Highlights
-            - **Privacy & Ghost Mode**: Stealth reading, typing indicators suppression, anonymous story viewing, and app switcher preview masking.
-            - **Accidental Send Confirmation**: Optional confirmation prompt before sending messages to sensitive chats.
-            - **Clean Settings Architecture**: Reorganized into 8 intuitive categories (Appearance, Chats, Messages, Media, Notifications, Privacy, Calls, Advanced).
-            - **Call Audio & Transparency**: Audio source selection and honest technical documentation on Android call recording boundaries.
-            - **100% Ad-Free**: Fully purged AdsGram tracking and third-party ad injection.
-            - **Unlimited Pinned Chats**: Pin up to 100 chats in your folders and chats list.
-            - **Clean Forwarding**: Forward messages without sender quotes or captions.
-
-            #### 📲 Installation
-            1. Download `Opengram.apk` below.
-            2. Tap to install on your Android device (Android 7.0+).
+            Download **Opengram.apk** below and install it on Android 7.0 or later.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
