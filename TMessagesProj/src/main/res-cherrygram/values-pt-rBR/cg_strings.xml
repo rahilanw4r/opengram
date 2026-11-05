@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- by t.me/arsLan-->
-    <string name="CG_FollowChannelTitle">Subscrever o canal oficial</string>
+        <string name="CG_FollowChannelTitle">Subscrever o canal oficial</string>
     <string name="CG_FollowChannelInfo">Entre no canal para ficar por dentro de todas as novidades e recursos do Opengram!</string>
     <string name="CG_DoNotRemindAgain">Não voltar a lembrar</string>
     <!--Telegram screens-->
@@ -440,7 +439,7 @@ Se uma correspondência for encontrada dentro do link, toda a mensagem será aut
     <string name="DP_Donate_GiftMarket_Desc">2. Botão \"**Mercado de Presentes**\" no menu lateral.</string>
     <string name="DP_Donate_MessageFilter_Desc">3. Recurso \"**Filtro de mensagens**\".</string>
     <string name="DP_Donate_MessageMenu_Desc">4. Menu de mensagens \"**estilo iOS**\".</string>
-    <string name="DP_Donate_Cheque">Envie uma confirmação de pagamento para **@arsLan** para receber bônus.</string>
+    <string name="DP_Donate_Cheque">Envie uma confirmação de pagamento para **@opengram** para receber bônus.</string>
     <string name="DP_Donate_Terms">Antes de fazer uma doação, leia os **Termos de Doação**. Todas as doações são voluntárias e não reembolsáveis.</string>
     <string name="DP_Donate_Counter_one">**%1$d** pessoa já apoiou o projeto e recebeu bônus.</string>
     <string name="DP_Donate_Counter_few">**%1$d** pessoas já apoiaram o projeto e receberam bônus.</string>
@@ -457,7 +456,7 @@ Se uma correspondência for encontrada dentro do link, toda a mensagem será aut
     <string name="DP_Donate_Method_Int">Sistemas de pagamento internacionais</string>
     <string name="DP_Donate_Method_Rus">Para residentes da Federação Russa</string>
     <string name="DP_Donate_Method_Uzb">Para residentes do Uzbequistão</string>
-    <string name="DP_Donate_Method_Surname">Por favor, entre em contato com **@arsLan** caso o sistema de pagamento exija informações pessoais do destinatário.</string>
+    <string name="DP_Donate_Method_Surname">Por favor, entre em contato com **@opengram** caso o sistema de pagamento exija informações pessoais do destinatário.</string>
     <string name="DP_Donate_Exclusive">Exclusivo para apoiadores</string>
     <string name="DP_Donate_ExclusiveDesc">Apoie o projeto e desbloqueie todos os recursos.</string>
     <!--Donations-->

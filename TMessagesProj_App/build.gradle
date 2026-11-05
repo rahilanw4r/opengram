@@ -172,7 +172,7 @@ android {
         variant.outputs.configureEach { output ->
             def abi = output.getFilter('ABI')
             if (abi == null) abi = 'universal'
-            outputFileName = "Cherrygram-PlayStore-${APP_VERSION_NAME_CHERRY}-TG-${defaultConfig.versionName}-${abi}.apk"
+            outputFileName = "Opengram-PlayStore-${APP_VERSION_NAME_CHERRY}-TG-${defaultConfig.versionName}-${abi}.apk"
             output.versionCodeOverride = defaultConfig.versionCode * 10
         }
     }
@@ -267,9 +267,9 @@ static def isWindowsOrMacOS() {
 
 def desktopPath
 if (isWindows()) {
-    desktopPath = "C:/Users/${SYSTEM_USERNAME}/Desktop/Cherry/Stable"
+    desktopPath = "C:/Users/${SYSTEM_USERNAME}/Desktop/Opengram/Stable"
 } else if (isMacOS()) {
-    desktopPath = "/Users/${SYSTEM_USERNAME}/Desktop/Cherry/Stable"
+    desktopPath = "/Users/${SYSTEM_USERNAME}/Desktop/Opengram/Stable"
 }
 
 tasks.register('copyFiles', Copy) {

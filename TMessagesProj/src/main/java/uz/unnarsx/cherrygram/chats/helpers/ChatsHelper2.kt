@@ -1,12 +1,8 @@
 /**
- * This is the source code of Cherrygram for Android.
+ * This is the source code of Opengram for Android.
  * It is licensed under GNU GPL v. 2 or later.
  * You should have received a copy of the license in this archive (see LICENSE).
- * Please, be respectful and credit the original author if you use this code.
- *
- * Copyright github.com/arsLan4k1390, 2022-2026.
  */
-
 package uz.unnarsx.cherrygram.chats.helpers
 
 import android.os.Build
@@ -290,7 +286,7 @@ object ChatsHelper2 {
                     .createCopyBulletin(getString(R.string.TextCopied))
                     .show()
             }
-            .addIf(sa?.fragment?.userConfig?.clientUserId == Constants.Cherrygram_Owner && messageObject.messageOwner != null,
+            .addIf(false,
                 R.drawable.msg_calendar2,
                 if (messageObject.messageOwner.media != null && messageObject.messageOwner.media.document != null) {
                     "Date: ➥ " + CGResourcesHelper.createDateAndTimeForJSON(messageObject.messageOwner.media.document.date.toLong())

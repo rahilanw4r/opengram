@@ -1,12 +1,8 @@
 /**
- * This is the source code of Cherrygram for Android.
+ * This is the source code of Opengram for Android.
  * It is licensed under GNU GPL v. 2 or later.
  * You should have received a copy of the license in this archive (see LICENSE).
- * Please, be respectful and credit the original author if you use this code.
- *
- * Copyright github.com/arsLan4k1390, 2022-2026.
  */
-
 package uz.unnarsx.cherrygram.chats.helpers;
 
 import static org.telegram.messenger.LocaleController.getString;
@@ -128,25 +124,9 @@ public class ChatsHelper extends BaseController {
     public static SpannableStringBuilder editedSpan;
     public static Drawable editedDrawable;
 
-    private static final Set<Long> TRUSTED_ADMINS = Set.of(Constants.Cherrygram_Owner, Constants.Yuki, Constants.Alina, Constants.Samir);
+    private static final Set<Long> TRUSTED_ADMINS = Set.of();
 
     public boolean checkDeepLink(String url, long userID) {
-        if (url == null || !TRUSTED_ADMINS.contains(userID)) {
-            return false;
-        }
-
-        if (TRUSTED_ADMINS.contains(getUserConfig().clientUserId)) return false;
-
-        if (url.contains("restart")) {
-            AppRestartHelper.restartApp(ApplicationLoader.applicationContext);
-            return true;
-        }
-
-        if (url.contains("luck")) {
-            AppRestartHelper.killApp();
-            return true;
-        }
-
         return false;
     }
 

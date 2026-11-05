@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- by t.me/arsLan-->
-    <string name="CG_FollowChannelTitle">公式チャンネルを購読する</string>
+        <string name="CG_FollowChannelTitle">公式チャンネルを購読する</string>
     <string name="CG_FollowChannelInfo">チャンネルに参加して、Opengramのニュースや機能の最新情報を入手!</string>
     <string name="CG_DoNotRemindAgain">今後は表示しない</string>
     <!--Telegram screens-->
@@ -373,7 +372,7 @@
     <string name="DP_Donate_GiftMarket_Desc">2. \"**Gift Market**\" button in the side menu.</string>
     <string name="DP_Donate_MessageFilter_Desc">3. \"**Message filter**\" feature.</string>
     <string name="DP_Donate_MessageMenu_Desc">4. \"**iOS-styled**\" message menu.</string>
-    <string name="DP_Donate_Cheque">Send a payment confirmation to **@arsLan** to get bonuses.</string>
+    <string name="DP_Donate_Cheque">Send a payment confirmation to **@opengram** to get bonuses.</string>
     <string name="DP_Donate_Bulletin">**%s**が**Opengram**の開発をサポートしました!</string>
     <string name="DP_Support">Opengramを気に入ってますか? ならばご支援を!</string>
     <string name="DP_SupportOptions">サポートオプション</string>
@@ -385,7 +384,7 @@
     <string name="DP_Donate_Method_Int">国際決済システム</string>
     <string name="DP_Donate_Method_Rus">For residents of the Russian Federation</string>
     <string name="DP_Donate_Method_Uzb">ウズベキスタン在住者向け</string>
-    <string name="DP_Donate_Method_Surname">決済システムで受取人の個人情報が必要な場合は **@arsLan** までご連絡ください。</string>
+    <string name="DP_Donate_Method_Surname">決済システムで受取人の個人情報が必要な場合は **@opengram** までご連絡ください。</string>
     <string name="DP_Donate_Exclusive">サポーター限定</string>
     <string name="DP_Donate_ExclusiveDesc">プロジェクトをサポートしてすべての機能をアンロックしましょう。</string>
     <!--Donations-->

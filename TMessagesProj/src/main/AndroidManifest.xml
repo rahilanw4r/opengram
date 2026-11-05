@@ -637,7 +637,7 @@
         <activity
             android:name="uz.unnarsx.cherrygram.core.helpers.AppRestartHelper"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:process=":cherrygram"
+            android:process=":opengram"
             android:exported="false"
             />
 

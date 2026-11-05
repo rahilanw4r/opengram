@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- by t.me/arsLan-->
-    <string name="CG_AppName" translatable="false">Opengram</string>
+        <string name="CG_AppName" translatable="false">Opengram</string>
     <string name="CG_FollowChannelTitle">Subscribe to the official channel</string>
     <string name="CG_FollowChannelInfo">Join the channel to stay up to date with all the news and features of Opengram!</string>
     <string name="CG_DoNotRemindAgain">Don\'t remind again</string>
@@ -558,7 +557,7 @@
     <string name="DP_Donate_GiftMarket_Desc">2. \"**Gift Market**\" button in the side menu.</string>
     <string name="DP_Donate_MessageFilter_Desc">3. \"**Message filter**\" feature.</string>
     <string name="DP_Donate_MessageMenu_Desc">4. \"**iOS-styled**\" message menu. Not supported on tablets.</string>
-    <string name="DP_Donate_Cheque">Send a payment confirmation to **@arsLan** to get bonuses.</string>
+    <string name="DP_Donate_Cheque">Send a payment confirmation to **@opengram** to get bonuses.</string>
     <string name="DP_Donate_Terms">Before making a donation, please read the **Donation Terms**. All donations are voluntary and non-refundable.</string>
 
     <string name="DP_Donate_Counter_one">**%1$d** person has already supported the project and received bonuses</string>
@@ -580,7 +579,7 @@
     <string name="DP_Donate_Method_Int">International payment systems</string>
     <string name="DP_Donate_Method_Rus">For residents of the Russian Federation</string>
     <string name="DP_Donate_Method_Uzb">For residents of Uzbekistan</string>
-    <string name="DP_Donate_Method_Surname">Please contact **@arsLan** if the payment system requires the recipient\'s personal information.</string>
+    <string name="DP_Donate_Method_Surname">Please contact **@opengram** if the payment system requires the recipient\'s personal information.</string>
 
     <string name="DP_Donate_Exclusive">Exclusive for supporters</string>
     <string name="DP_Donate_ExclusiveDesc">Support the project and unlock all features.</string>

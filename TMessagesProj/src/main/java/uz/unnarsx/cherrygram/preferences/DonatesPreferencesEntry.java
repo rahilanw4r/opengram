@@ -1,12 +1,8 @@
 /**
- * This is the source code of Cherrygram for Android.
+ * This is the source code of Opengram for Android.
  * It is licensed under GNU GPL v. 2 or later.
  * You should have received a copy of the license in this archive (see LICENSE).
- * Please, be respectful and credit the original author if you use this code.
- *
- * Copyright github.com/arsLan4k1390, 2022-2026.
  */
-
 package uz.unnarsx.cherrygram.preferences;
 
 import static org.telegram.messenger.AndroidUtilities.dp;
@@ -61,10 +57,10 @@ import uz.unnarsx.cherrygram.preferences.helpers.SettingsHelper;
 public class DonatesPreferencesEntry extends BaseCGPreferencesEntry implements NotificationCenter.NotificationCenterDelegate {
 
     private final boolean isTestBackend = getConnectionsManager().isTestBackend();
-    private boolean didDonate = DonatesManager.INSTANCE.checkAllDonatedAccounts() || DonatesManager.INSTANCE.checkAllDonatedAccountsForMarketplace();
-    private boolean showDonates = !isTestBackend && (ApplicationLoader.isStandaloneBuild() || didDonate);
+    private boolean didDonate = false;
+    private boolean showDonates = false;
     public DonatesPreferencesEntry forceShowDonates(boolean force) {
-        if (force) this.showDonates = !isTestBackend;
+        this.showDonates = false;
         return this;
     }
 
@@ -188,7 +184,7 @@ public class DonatesPreferencesEntry extends BaseCGPreferencesEntry implements N
         bonusesPriceTable.addFullRow(AndroidUtilities.replaceSingleTag(getString(R.string.DP_Donate_Cheque),
                 Theme.key_windowBackgroundWhiteLinkText,
                 AndroidUtilities.REPLACING_TAG_TYPE_LINKBOLD,
-                () -> Browser.openUrl(getContext(), "https://t.me/arsLan")
+                () -> {}
         ));
         int counter = DonatesManager.INSTANCE.donatesCounter(2);
         if (counter > 1) {
@@ -209,7 +205,7 @@ public class DonatesPreferencesEntry extends BaseCGPreferencesEntry implements N
         CharSequence personalDataText = AndroidUtilities.replaceSingleTag(getString(R.string.DP_Donate_Method_Surname),
                 Theme.key_windowBackgroundWhiteLinkText,
                 AndroidUtilities.REPLACING_TAG_TYPE_LINKBOLD,
-                () -> Browser.openUrl(getContext(), "https://t.me/arsLan")
+                () -> {}
         );
 
         items.add(UItem.asHeader(getString(R.string.DP_Donate_Method_Int)));
@@ -376,38 +372,38 @@ public class DonatesPreferencesEntry extends BaseCGPreferencesEntry implements N
 
     private static class CardsRepo {
 
-        public static String Card_Anor_Humo = "9860600408892476";
-        public static String Card_Anor_UzCard = "5614683516520707";
-        public static String Card_Anor_UzCard_Kids = "5614683588301333";
+        public static String Card_Anor_Humo = "";
+        public static String Card_Anor_UzCard = "";
+        public static String Card_Anor_UzCard_Kids = "";
 
-        public static String Card_Humo = CherrygramFirebaseConfig.INSTANCE.getHumoCardNumber();
+        public static String Card_Humo = "";
 
-        public static String Card_Kapital_Humo = "9860100128256904";
-        public static String Card_Kapital_Visa_USD = "4278310028377794";
-        public static String Card_Kapital_Master_UZS = "5397170005511325";
+        public static String Card_Kapital_Humo = "";
+        public static String Card_Kapital_Visa_USD = "";
+        public static String Card_Kapital_Master_UZS = "";
 
-        public static String Card_T_Bank = CherrygramFirebaseConfig.INSTANCE.getTbankCardNumber();
+        public static String Card_T_Bank = "";
 
-        public static String Card_TBC_Humo = "9860350143344678";
+        public static String Card_TBC_Humo = "";
 
-        public static String Card_Yoomoney_MIR = "2204120134366927";
-        public static String Card_Yoomoney_Account = "4100116983696293";
+        public static String Card_Yoomoney_MIR = "";
+        public static String Card_Yoomoney_Account = "";
 
     }
 
     private static class CryptoWalletsRepo {
 
-        public static String Binance_Account = "220943480";
-        public static String Binance_Bitcoin = "1Pr6GqqWakgKWW1nDjVyHUYo1AcWbSN453";
-        public static String Binance_Ethereum = "0xa8392346f426443ef7e3d98047bace6dbcc0e7d8";
-        public static String Binance_USDT = "TKnPT5rojMf851ejov2Xu4pxKcMfSh4Ws9";
+        public static String Binance_Account = "";
+        public static String Binance_Bitcoin = "";
+        public static String Binance_Ethereum = "";
+        public static String Binance_USDT = "";
 
-        public static String Tonkeeper_TON = "UQBG--q68OfxTQNE_-wcWIWTWxSSL1GxYGUW75CyrTrTUUCT";
-        public static String Tonkeeper_USDT = "UQBG--q68OfxTQNE_-wcWIWTWxSSL1GxYGUW75CyrTrTUUCT";
+        public static String Tonkeeper_TON = "";
+        public static String Tonkeeper_USDT = "";
 
-        public static String Wallet_Bitcoin = "bc1ql4f7nuxv44y6tc72zy5z4h2sucqzk93nnmpyrl";
-        public static String Wallet_TON = "UQCK2zt2pHa9ag-lUFTCuvsxW4lqPmkX6eSYFhS5xCKBwKAN";
-        public static String Wallet_USDT = "UQCK2zt2pHa9ag-lUFTCuvsxW4lqPmkX6eSYFhS5xCKBwKAN";
+        public static String Wallet_Bitcoin = "";
+        public static String Wallet_TON = "";
+        public static String Wallet_USDT = "";
 
     }
 

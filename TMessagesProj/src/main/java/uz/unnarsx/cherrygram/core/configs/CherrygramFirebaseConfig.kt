@@ -1,12 +1,8 @@
 /**
- * This is the source code of Cherrygram for Android.
+ * This is the source code of Opengram for Android.
  * It is licensed under GNU GPL v. 2 or later.
  * You should have received a copy of the license in this archive (see LICENSE).
- * Please, be respectful and credit the original author if you use this code.
- *
- * Copyright github.com/arsLan4k1390, 2022-2026.
  */
-
 package uz.unnarsx.cherrygram.core.configs
 
 import android.app.Activity
@@ -39,35 +35,35 @@ object CherrygramFirebaseConfig: CoroutineScope by CoroutineScope(
     private val sharedPreferences: SharedPreferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE)
 
     /** Card numbers start */
-    var humoCardNumber by sharedPreferences.string("CP_Humo_Card_Number", "9860100128256904")
-    var tbankCardNumber by sharedPreferences.string("CP_TBank_Card_Number", "9860100128256904")
+    var humoCardNumber by sharedPreferences.string("CP_Humo_Card_Number", "")
+    var tbankCardNumber by sharedPreferences.string("CP_TBank_Card_Number", "")
     /** Card numbers finish */
 
     /** SafeStars start */
-    var allowSafeStars by sharedPreferences.boolean("CG_AllowSafeStarsUI1", true)
-    var safe_stars_URL by sharedPreferences.string("CP_SafeStarsURL", "https://safe-stars.com/?partner=cherrygram")
-    var safe_stars_URL_RU by sharedPreferences.string("CP_SafeStarsURL_RU", "https://safe-stars.com/ru/?partner=cherrygram")
+    var allowSafeStars by sharedPreferences.boolean("CG_AllowSafeStarsUI1", false)
+    var safe_stars_URL by sharedPreferences.string("CP_SafeStarsURL", "")
+    var safe_stars_URL_RU by sharedPreferences.string("CP_SafeStarsURL_RU", "")
     /** SafeStars finish */
 
     /** SafeSurf start */
-    var allowSafeSurf by sharedPreferences.boolean("CG_AllowSafeSurfUI", true)
-    var safe_surf_URL by sharedPreferences.string("CP_SafeSurfURL", "https://t.me/safe_surfbot?start=cherrygram")
+    var allowSafeSurf by sharedPreferences.boolean("CG_AllowSafeSurfUI", false)
+    var safe_surf_URL by sharedPreferences.string("CP_SafeSurfURL", "")
     /** SafeSurf finish */
 
     /** SafePay start */
-    var allowSafePay by sharedPreferences.boolean("CG_AllowSafePayUI", true)
-    var safe_pay_URL by sharedPreferences.string("CP_SafePayURL", "https://t.me/safepaycard_bot?start=cherrygram")
+    var allowSafePay by sharedPreferences.boolean("CG_AllowSafePayUI", false)
+    var safe_pay_URL by sharedPreferences.string("CP_SafePayURL", "")
     /** SafePay finish */
 
     /** Edify start */
-    var allowEdify by sharedPreferences.boolean("CG_AllowEdify", true)
-    var edify_URL by sharedPreferences.string("CP_EdifyURL", "https://t.me/edify_reels_bot?start=cherrygram")
+    var allowEdify by sharedPreferences.boolean("CG_AllowEdify", false)
+    var edify_URL by sharedPreferences.string("CP_EdifyURL", "")
     /** Edify finish */
 
     /** AdsGram start */
     var showAdsRandomly by sharedPreferences.boolean("CG_ShowAdsRandomly", false)
-    var showAdsScreenInSettings by sharedPreferences.boolean("CG_ShowAdsScreenInSettings", true)
-    var showAdsInPlayStoreBuilds by sharedPreferences.boolean("CG_ShowAdsInPlayStoreBuilds", true)
+    var showAdsScreenInSettings by sharedPreferences.boolean("CG_ShowAdsScreenInSettings", false)
+    var showAdsInPlayStoreBuilds by sharedPreferences.boolean("CG_ShowAdsInPlayStoreBuilds", false)
     var alwaysShowAdsGramInChats by sharedPreferences.boolean("CG_AlwaysShowAdsGramInChats", false)
     /** AdsGram finish */
 
@@ -77,13 +73,13 @@ object CherrygramFirebaseConfig: CoroutineScope by CoroutineScope(
     var lastRemoteConfigCheckTime by sharedPreferences.long("CG_LastRemoteConfigCheckTime", 0)
 
     var showProxyInSettings by sharedPreferences.boolean("CG_ShowProxyInSettings", false)
-    var proxyURL by sharedPreferences.string("CP_ProxyURL", "https://t.me/proxy?server=78.17.39.137&port=443&secret=ee7ae12ad5e1268d51eccdc0d1acb595ea74656c6567612e6d65")
+    var proxyURL by sharedPreferences.string("CP_ProxyURL", "")
     /** Misc finish */
 
     /** Deleted Gifts start */
     var showDeletedGifts by sharedPreferences.boolean("CG_ShowDeletedGifts", false)
-    var deletedGiftsConfigURL by sharedPreferences.string("CG_DeletedGiftsConfigURL", "https://gitlab.com/arsLan4k1390/Cherrygram-IDS/-/raw/main/gift_list.json?inline=false")
-    var deletedGiftsStickerPackName by sharedPreferences.string("CG_DeletedGiftsStickerPackLink", "Cherrygram_HiddenGifts")
+    var deletedGiftsConfigURL by sharedPreferences.string("CG_DeletedGiftsConfigURL", "")
+    var deletedGiftsStickerPackName by sharedPreferences.string("CG_DeletedGiftsStickerPackLink", "Opengram_HiddenGifts")
     var deletedGiftsStickerPackOffset by sharedPreferences.int("CG_DeletedGiftsStickerpackOffset", 0)
     /** Deleted Gifts finish */
 
@@ -91,7 +87,7 @@ object CherrygramFirebaseConfig: CoroutineScope by CoroutineScope(
         launch {
             FirebaseApp.initializeApp(ApplicationLoader.applicationContext)
             FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = true
-            Firebase.analytics.setUserProperty("cherrygram_version", CGResourcesHelper.getCherryVersion())
+            Firebase.analytics.setUserProperty("opengram_version", CGResourcesHelper.getCherryVersion())
             Firebase.analytics.setUserProperty("code_version", CGResourcesHelper.getCodeVersion())
             Firebase.analytics.setUserProperty("source_code_version", CGResourcesHelper.getSourceCodeVersion())
             /*FirebaseRemoteConfigHelper_deprecated.init()

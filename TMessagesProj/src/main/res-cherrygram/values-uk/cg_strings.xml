@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- by t.me/arsLan-->
-    <string name="CG_FollowChannelTitle">Підписатися на офіційний канал</string>
+        <string name="CG_FollowChannelTitle">Підписатися на офіційний канал</string>
     <string name="CG_FollowChannelInfo">Долучайтеся до нашого каналу, щоб бути в курсі всіх новин та можливостей Opengram!</string>
     <string name="CG_DoNotRemindAgain">Не нагадувати</string>
     <!--Telegram screens-->
@@ -486,7 +485,7 @@
     <string name="DP_Donate_GiftMarket_Desc">2. Кнопка \"**Магазин подарунків**\" у боковому меню.</string>
     <string name="DP_Donate_MessageFilter_Desc">3. Функція \"**Фільтр повідомлень**\".</string>
     <string name="DP_Donate_MessageMenu_Desc">Меню повідомлень 4. \"**У стилі iOS**\". Не підтримується на планшетах.</string>
-    <string name="DP_Donate_Cheque">Надішліть підтвердження оплати на **@arsLan**, щоб отримати бонуси.</string>
+    <string name="DP_Donate_Cheque">Надішліть підтвердження оплати на **@opengram**, щоб отримати бонуси.</string>
     <string name="DP_Donate_Terms">Перед здійсненням пожертви, будь ласка, прочитайте Умови здійснення пожертв. Усі пожертви є добровільними та не підлягають поверненню.</string>
     <string name="DP_Donate_Counter_one">**%1$d** людина вже підтримала проект і отримала бонуси</string>
     <string name="DP_Donate_Counter_few">**%1$d** людина вже підтримала проект і отримала бонуси</string>
@@ -503,7 +502,7 @@
     <string name="DP_Donate_Method_Int">Міжнародні платіжні системи</string>
     <string name="DP_Donate_Method_Rus">Для жителів Російської Федерації</string>
     <string name="DP_Donate_Method_Uzb">Для жителів Узбекистану</string>
-    <string name="DP_Donate_Method_Surname">Будь ласка, зв\'яжіться з **@arsLan**, якщо платіжна система вимагає особисту інформацію одержувача.</string>
+    <string name="DP_Donate_Method_Surname">Будь ласка, зв\'яжіться з **@opengram**, якщо платіжна система вимагає особисту інформацію одержувача.</string>
     <string name="DP_Donate_Exclusive">Ексклюзивно для тих, хто підтримує</string>
     <string name="DP_Donate_ExclusiveDesc">Підтримайте проект і розблокуйте всі функції.</string>
     <!--Donations-->

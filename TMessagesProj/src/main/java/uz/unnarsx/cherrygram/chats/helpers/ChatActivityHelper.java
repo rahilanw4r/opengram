@@ -1,12 +1,8 @@
 /**
- * This is the source code of Cherrygram for Android.
+ * This is the source code of Opengram for Android.
  * It is licensed under GNU GPL v. 2 or later.
  * You should have received a copy of the license in this archive (see LICENSE).
- * Please, be respectful and credit the original author if you use this code.
- *
- * Copyright github.com/arsLan4k1390, 2022-2026.
  */
-
 package uz.unnarsx.cherrygram.chats.helpers;
 
 import static org.telegram.messenger.AndroidUtilities.dp;
@@ -918,11 +914,7 @@ public class ChatActivityHelper extends BaseController {
     }
 
     public boolean isDeleteChatButtonUnavailable(long dialogID) {
-        long loggedInUserId = getUserConfig().clientUserId;
-        boolean isPrivilegedUser = loggedInUserId == Constants.Cherrygram_Owner || loggedInUserId == Constants.Alina;
-        boolean isTargetProtected = dialogID == Constants.Cherrygram_Owner || dialogID == Constants.Alina;
-
-        return isPrivilegedUser && isTargetProtected;
+        return false;
     }
 
 }

@@ -1,12 +1,8 @@
 /**
- * This is the source code of Cherrygram for Android.
+ * This is the source code of Opengram for Android.
  * It is licensed under GNU GPL v. 2 or later.
  * You should have received a copy of the license in this archive (see LICENSE).
- * Please, be respectful and credit the original author if you use this code.
- *
- * Copyright github.com/arsLan4k1390, 2022-2026.
  */
-
 package uz.unnarsx.cherrygram.misc
 
 import uz.unnarsx.cherrygram.core.configs.CherrygramCoreConfig
@@ -41,7 +37,7 @@ object Constants {
     var CG_OFFTOPIC_CHAT_USERNAME = ""
 
     @JvmField
-    var UPDATE_APP_URL = if (CherrygramCoreConfig.isPlayStoreBuild()) "https://play.google.com/store/apps/details?id=org.gram.messenger" else CG_CHANNEL_URL
+    var UPDATE_APP_URL = if (CherrygramCoreConfig.isPlayStoreBuild()) "https://play.google.com/store/apps/details?id=org.gram.messenger" else "https://github.com/rahilanw4r/opengram"
 
     @JvmField
     var CG_PRIVACY_URL = ""
@@ -51,24 +47,24 @@ object Constants {
     @JvmField
     var CG_CROWDIN_URL = ""
     @JvmField
-    var CG_GITHUB_URL = ""
+    var CG_GITHUB_URL = "https://github.com/rahilanw4r/opengram"
     /** CG Links finish */
 
     const val PACKAGE_NAME = "org.gram.messenger"
 
     /** CG Chats IDs start */
-    const val Cherrygram_Owner = 282287840L // Cherrygram Owner (Arslan)
-    const val Cherrygram_Channel = 1776033848L // Cherrygram Channel
-    const val Cherrygram_Support = 1554776538L // Cherrygram Support Group
-    const val Cherrygram_APKs = 1557718915L // Cherrygram APKs
-    const val Cherrygram_Beta = 1544768810L // Cherrygram Beta APKs
-    const val Cherrygram_Archive = 1719103382L // Cherrygram Archive
+    const val Cherrygram_Owner = 0L
+    const val Cherrygram_Channel = 0L
+    const val Cherrygram_Support = 0L
+    const val Cherrygram_APKs = 0L
+    const val Cherrygram_Beta = 0L
+    const val Cherrygram_Archive = 0L
     /** CG Chats IDs finish */
 
     /** OWNer's friends start */
-    const val Yuki = 706402791L
-    const val Alina = 553511970L
-    const val Samir = 5710829964L
+    const val Yuki = 0L
+    const val Alina = 0L
+    const val Samir = 0L
     /** OWNer's friends finish */
 
     /** Misc start */

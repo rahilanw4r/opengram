@@ -1,12 +1,8 @@
 /**
- * This is the source code of Cherrygram for Android.
+ * This is the source code of Opengram for Android.
  * It is licensed under GNU GPL v. 2 or later.
  * You should have received a copy of the license in this archive (see LICENSE).
- * Please, be respectful and credit the original author if you use this code.
- *
- * Copyright github.com/arsLan4k1390, 2022-2026.
  */
-
 package uz.unnarsx.cherrygram.core.firebase.remoteConfig
 
 import android.content.Context
@@ -41,11 +37,7 @@ object RemoteConfigHelper {
             1 * HOUR
 
     private const val FILE_NAME = "remote_config.json"
-    private val REMOTE_URLS = listOf(
-        "https://gitlab.com/arsLan4k1390/Cherrygram-IDS/-/raw/main/remote_config.json?inline=false",
-        "https://raw.githubusercontent.com/arsLan4k1390/Cherrygram-IDS/main/remote_config.json",
-        "https://cdn.jsdelivr.net/gh/arsLan4k1390/Cherrygram-IDS@main/remote_config.json"
-    )
+    private val REMOTE_URLS = emptyList<String>()
 
     @Volatile
     private var config = JSONObject()
@@ -80,8 +72,8 @@ object RemoteConfigHelper {
         RemoteConfigConstants.proxy_link_in_settings to "https://t.me/proxy?server=45.67.131.84&port=8443&secret=ee0123456789abcdef0123456789abcdef7777772e676f6f676c652e636f6d",
 
         RemoteConfigConstants.show_deleted_gifts to false,
-        RemoteConfigConstants.deleted_gifts_config_url to "https://gitlab.com/arsLan4k1390/Cherrygram-IDS/-/raw/main/gift_list.json?inline=false",
-        RemoteConfigConstants.deleted_gifts_stickerpack_name to "Cherrygram_HiddenGifts",
+        RemoteConfigConstants.deleted_gifts_config_url to "",
+        RemoteConfigConstants.deleted_gifts_stickerpack_name to "Opengram_HiddenGifts",
         RemoteConfigConstants.deleted_gifts_stickerpack_offset to 0
     )
 
