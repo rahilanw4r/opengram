@@ -381,16 +381,6 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     avatarImage.setForUserOrChat(currentChat, avatarDrawable);
                 }
             } else if (messageObject.isSponsored()) {
-                /*if (messageObject.isAdsGram) {
-                    String iconUrl = messageObject.bannerData.getAsset("icon");
-                    if (iconUrl != null) {
-                        avatarImage.setImage(ImageLocation.getForPath(iconUrl), "100_100", null, null, null, 0);
-                    }
-                } else {
-                    if (messageObject.sponsoredPhoto != null) {
-                        avatarImage.setImage(ImageLocation.getForPhoto(FileLoader.getClosestPhotoSizeWithSize(messageObject.sponsoredPhoto.sizes, dp(50), false, null, true), messageObject.sponsoredPhoto), "50_50", avatarDrawable, null, null, 0);
-                    }
-                }*/
                 if (messageObject.sponsoredPhoto != null) {
                     avatarImage.setImage(ImageLocation.getForPhoto(FileLoader.getClosestPhotoSizeWithSize(messageObject.sponsoredPhoto.sizes, dp(50), false, null, true), messageObject.sponsoredPhoto), "50_50", avatarDrawable, null, null, 0);
                 }

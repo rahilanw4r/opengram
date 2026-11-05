@@ -43,34 +43,12 @@ object RemoteConfigHelper {
     private var config = JSONObject()
 
     private val defaults = mapOf<String, Any>(
-        RemoteConfigConstants.show_ads_randomly to false,
-        RemoteConfigConstants.show_ads_screen_in_settings to true,
-        RemoteConfigConstants.show_ads_in_play_store_builds to true,
-        RemoteConfigConstants.always_show_adsgram_in_chats to true,
-
         RemoteConfigConstants.videomessages_resolution to 512,
         RemoteConfigConstants.use_braille_spoiler to false,
-
-        RemoteConfigConstants.humo_card_number to "9860100128256904",
-        RemoteConfigConstants.tbank_card_number to "9860100128256904",
-
-        RemoteConfigConstants.allow_use_safestars to true,
-        RemoteConfigConstants.safe_stars_URL to "https://safe-stars.com/?partner=cherrygram",
-        RemoteConfigConstants.safe_stars_URL_RU to "https://safe-stars.com/ru/?partner=cherrygram",
-        RemoteConfigConstants.allow_use_safesurf to true,
-        RemoteConfigConstants.safe_surf_URL to "https://t.me/safe_surfbot?start=cherrygram",
-        RemoteConfigConstants.allow_use_safepay to true,
-        RemoteConfigConstants.safe_pay_URL to "https://t.me/safepaycard_bot?start=cherrygram",
-
-        RemoteConfigConstants.allow_use_edify to true,
-        RemoteConfigConstants.edify_url to "https://t.me/edify_reels_bot?start=cherrygram",
-
         RemoteConfigConstants.record_oom_as_nf to true,
-        RemoteConfigConstants.use_cg_oom_handler to true,
-
+        RemoteConfigConstants.use_cg_oom_handler to false,
         RemoteConfigConstants.show_proxy_in_settings to false,
-        RemoteConfigConstants.proxy_link_in_settings to "https://t.me/proxy?server=45.67.131.84&port=8443&secret=ee0123456789abcdef0123456789abcdef7777772e676f6f676c652e636f6d",
-
+        RemoteConfigConstants.proxy_link_in_settings to "",
         RemoteConfigConstants.show_deleted_gifts to false,
         RemoteConfigConstants.deleted_gifts_config_url to "",
         RemoteConfigConstants.deleted_gifts_stickerpack_name to "Opengram_HiddenGifts",
@@ -269,11 +247,6 @@ object RemoteConfigHelper {
     }
 
     fun applyConfig() {
-        checkShowAdsRandomly()
-        checkAdsScreenInSettings()
-        checkAdsInPlayStoreBuilds()
-        checkAlwaysShowAdsGramInChats()
-
         checkBrailleSpoiler()
         checkVideoMessagesResolution()
         checkMinCherryVersion()
@@ -299,34 +272,6 @@ object RemoteConfigHelper {
 
         checkDeletedGifts()
     }
-
-    private fun checkShowAdsRandomly() = checkAndUpdate(
-        RemoteConfigConstants.show_ads_randomly,
-        ::getBoolean,
-        { CherrygramFirebaseConfig.showAdsRandomly },
-        { CherrygramFirebaseConfig.showAdsRandomly = it }
-    )
-
-    private fun checkAdsScreenInSettings() = checkAndUpdate(
-        RemoteConfigConstants.show_ads_screen_in_settings,
-        ::getBoolean,
-        { CherrygramFirebaseConfig.showAdsScreenInSettings },
-        { CherrygramFirebaseConfig.showAdsScreenInSettings = it }
-    )
-
-    private fun checkAdsInPlayStoreBuilds() = checkAndUpdate(
-        RemoteConfigConstants.show_ads_in_play_store_builds,
-        ::getBoolean,
-        { CherrygramFirebaseConfig.showAdsInPlayStoreBuilds },
-        { CherrygramFirebaseConfig.showAdsInPlayStoreBuilds = it }
-    )
-
-    private fun checkAlwaysShowAdsGramInChats() = checkAndUpdate(
-        RemoteConfigConstants.always_show_adsgram_in_chats,
-        ::getBoolean,
-        { CherrygramFirebaseConfig.alwaysShowAdsGramInChats },
-        { CherrygramFirebaseConfig.alwaysShowAdsGramInChats = it }
-    )
 
     private fun checkVideoMessagesResolution() = checkAndUpdate(
         RemoteConfigConstants.videomessages_resolution,

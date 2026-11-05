@@ -36,7 +36,7 @@ public class ExperimentalPreferencesEntry extends BaseCGPreferencesEntry {
 
     private final int testOOMNotificationRow = 3;
 
-    private static final long REFRESH_INTERVAL_MS = CherrygramExperimentalConfig.INSTANCE.getOomHandlerPopup() ? 1000L : 200L;
+    private static final long REFRESH_INTERVAL_MS = 3000L;
 
     private final Runnable refreshRunnable = new Runnable() {
         @Override

@@ -92,7 +92,6 @@
 -keep class uz.unnarsx.cherrygram.chats.gemini.GeminiErrorDTO$ErrorDetail {*;}
 -keep class uz.unnarsx.cherrygram.chats.gemini.GeminiErrorDTO$ErrorDetails{*;}
 -keep class uz.unnarsx.cherrygram.chats.gemini.GeminiErrorDTO$Metadata {*;}
--keep class uz.unnarsx.cherrygram.donates.adsgram.** { *; }
 -keep class uz.unnarsx.cherrygram.core.helpers.DeeplinkHelper { *; }
 
 # Keep all class member names of CameraX

@@ -36,7 +36,7 @@ public class MessagesPreferencesEntry extends BaseCGPreferencesEntry {
 
     private final int geminiSettingsRow = 8, voiceTranscriptionRow = 9, freeVoiceTranscriptionRow = 19;
 
-    private final int messageFilterRow = 10, leftBottomBtnRow = 11, doubleTapRow = 12, slideActionRow = 13, deleteForAllRow = 14;
+    private final int messageFilterRow = 10, leftBottomBtnRow = 11, doubleTapRow = 12, slideActionRow = 13, deleteForAllRow = 14, confirmSendMessageRow = 20;
 
     private final int reactionsOverlayRow = 15, reactionAnimationRow = 16, tapsOnPremiumStickersRow = 17, premiumStickersAutoplayRow = 18;
 
@@ -127,6 +127,10 @@ public class MessagesPreferencesEntry extends BaseCGPreferencesEntry {
                 .setChecked(CherrygramMessagesConfig.INSTANCE.getDeleteForAll())
                 .slug("deleteForAll")
         );
+        items.add(SettingsHelper.asSwitchCG(confirmSendMessageRow, "Confirm Before Sending", "Show confirmation prompt before sending messages to avoid accidental sends")
+                .setChecked(CherrygramMessagesConfig.INSTANCE.getConfirmSendMessage())
+                .slug("confirmSendMessage")
+        );
         items.add(UItem.asShadow(null));
 
         items.add(UItem.asHeader(getString(R.string.TelegramPremium)));
@@ -187,6 +191,9 @@ public class MessagesPreferencesEntry extends BaseCGPreferencesEntry {
         } else if (item.id == deleteForAllRow) {
             CherrygramMessagesConfig.INSTANCE.setDeleteForAll(!CherrygramMessagesConfig.INSTANCE.getDeleteForAll());
             SettingsHelper.updateCheckState(view, CherrygramMessagesConfig.INSTANCE.getDeleteForAll());
+        } else if (item.id == confirmSendMessageRow) {
+            CherrygramMessagesConfig.INSTANCE.setConfirmSendMessage(!CherrygramMessagesConfig.INSTANCE.getConfirmSendMessage());
+            SettingsHelper.updateCheckState(view, CherrygramMessagesConfig.INSTANCE.getConfirmSendMessage());
         } else if (item.id == reactionsOverlayRow) {
             CherrygramMessagesConfig.INSTANCE.setDisableReactionsOverlay(!CherrygramMessagesConfig.INSTANCE.getDisableReactionsOverlay());
             SettingsHelper.updateCheckState(view, CherrygramMessagesConfig.INSTANCE.getDisableReactionsOverlay());

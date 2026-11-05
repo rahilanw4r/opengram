@@ -60,12 +60,6 @@ object CherrygramFirebaseConfig: CoroutineScope by CoroutineScope(
     var edify_URL by sharedPreferences.string("CP_EdifyURL", "")
     /** Edify finish */
 
-    /** AdsGram start */
-    var showAdsRandomly by sharedPreferences.boolean("CG_ShowAdsRandomly", false)
-    var showAdsScreenInSettings by sharedPreferences.boolean("CG_ShowAdsScreenInSettings", false)
-    var showAdsInPlayStoreBuilds by sharedPreferences.boolean("CG_ShowAdsInPlayStoreBuilds", false)
-    var alwaysShowAdsGramInChats by sharedPreferences.boolean("CG_AlwaysShowAdsGramInChats", false)
-    /** AdsGram finish */
 
     /** Misc start */
     var useBrailleSpoiler by sharedPreferences.boolean("CG_UseBrailleSpoiler", false)

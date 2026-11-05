@@ -7860,6 +7860,21 @@ public class ChatActivityEnterView extends FrameLayout implements
     }
 
     protected boolean showConfirmAlert(Runnable onConfirmed) {
+        if (uz.unnarsx.cherrygram.core.configs.CherrygramMessagesConfig.INSTANCE.getConfirmSendMessage()) {
+            if (parentActivity != null) {
+                org.telegram.ui.ActionBar.AlertDialog.Builder builder = new org.telegram.ui.ActionBar.AlertDialog.Builder(parentActivity);
+                builder.setTitle(org.telegram.messenger.LocaleController.getString(org.telegram.messenger.R.string.SendMessage));
+                builder.setMessage(org.telegram.messenger.LocaleController.getString("AreYouSure", org.telegram.messenger.R.string.AreYouSure));
+                builder.setPositiveButton(org.telegram.messenger.LocaleController.getString(org.telegram.messenger.R.string.Send), (dialog, which) -> {
+                    if (onConfirmed != null) {
+                        onConfirmed.run();
+                    }
+                });
+                builder.setNegativeButton(org.telegram.messenger.LocaleController.getString(org.telegram.messenger.R.string.Cancel), null);
+                builder.show();
+                return true;
+            }
+        }
         return false;
     }
 

@@ -33,12 +33,6 @@ object RemoteConfigConstants {
     const val edify_url = "edify_url"
     /** SafePay finish */
 
-    /** AdsGram start */
-    const val show_ads_randomly = "show_ads_randomly"
-    const val show_ads_screen_in_settings = "show_ads_screen_in_settings"
-    const val show_ads_in_play_store_builds = "show_ads_in_play_store_builds"
-    const val always_show_adsgram_in_chats = "always_show_adsgram_in_chats"
-    /** AdsGram finish */
 
     /** Misc start */
     const val show_proxy_in_settings = "show_proxy_in_settings"

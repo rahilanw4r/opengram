@@ -106,6 +106,7 @@ object CherrygramMessagesConfig {
     var msgFiltersHideAllUnderSpoiler by sharedPreferences.boolean("CP_MsgFiltersHideAll", false)
     var msgFiltersCollapseAutomatically by sharedPreferences.boolean("CP_MsgFiltersCollapseAutomatically", false)
     var msgFilterTransparentMsg by sharedPreferences.boolean("CP_MsgFilterTransparentMsg", false)
+    var confirmSendMessage by sharedPreferences.boolean("CP_ConfirmSendMessage", false)
     /** Messages filter finish */
 
     const val LEFT_BUTTON_FORWARD_WO_AUTHORSHIP = 0

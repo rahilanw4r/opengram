@@ -459,7 +459,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         getWindow().setBackgroundDrawable(new ActivityWindowEmptyBackgroundDrawable());
         getWindow().setFormat(PixelFormat.OPAQUE);
 
-        flagSecureReason = new FlagSecureReason(getWindow(), () -> SharedConfig.passcodeHash.length() > 0 && !SharedConfig.allowScreenCapture);
+        flagSecureReason = new FlagSecureReason(getWindow(), () -> (SharedConfig.passcodeHash.length() > 0 && !SharedConfig.allowScreenCapture) || uz.unnarsx.cherrygram.core.configs.CherrygramPrivacyConfig.INSTANCE.getHideAppSwitcherPreview());
         flagSecureReason.attach();
 
         super.onCreate(savedInstanceState);

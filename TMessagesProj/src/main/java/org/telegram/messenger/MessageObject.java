@@ -135,7 +135,6 @@ import uz.unnarsx.cherrygram.chats.filters.MessagesFilterHelper;
 import uz.unnarsx.cherrygram.core.configs.CherrygramMessagesConfig;
 import uz.unnarsx.cherrygram.core.configs.CherrygramCoreConfig;
 import uz.unnarsx.cherrygram.core.configs.CherrygramPrivacyConfig;
-import uz.unnarsx.cherrygram.donates.adsgram.AdsGramResponse;
 
 import me.vkryl.core.BitwiseUtils;
 
@@ -13706,10 +13705,6 @@ public class MessageObject {
         this.forceDrawDirectShare = set;
     }
 
-    public boolean isAdsGram;
-    public boolean adsGramShowTracked;
-    public AdsGramResponse.BannerData bannerData;
-
     public boolean shouldBlockMessage() {
         if (messageBlocked == null) {
             messageBlocked = MessagesFilterHelper.INSTANCE.shouldBlockMessage(this);
@@ -13759,7 +13754,7 @@ public class MessageObject {
                 && ChatObject.isChannelCG(chat)
                 && !chat.signature_profiles
                 && this.messageOwner.grouped_id == 0 // Albums
-                && !this.isSponsored() && !this.isAdsGram; // ADS
+                && !this.isSponsored(); // ADS
     }
 
     public int getWideMessageBounds() {
