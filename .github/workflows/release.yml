@@ -25,19 +25,36 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Free Disk Space & Configure Swap
+        run: |
+          sudo fallocate -l 6G /swapfile || true
+          sudo chmod 600 /swapfile || true
+          sudo mkswap /swapfile || true
+          sudo swapon /swapfile || true
+          free -h
+
       - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set up Android SDK & NDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install Android Build Tools & NDK
+      - name: Set up Android SDK & Install Components
         run: |
-          yes | sdkmanager --licenses || true
-          sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;27.2.12479018" "cmake;3.22.1"
+          export ANDROID_HOME=/usr/local/lib/android/sdk
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
+          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
+          echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
+
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -f "$SDKMANAGER" ]; then
+            SDKMANAGER="sdkmanager"
+          fi
+
+          echo "Using sdkmanager: $SDKMANAGER"
+          yes | $SDKMANAGER --licenses || true
+          $SDKMANAGER "platforms;android-36" "build-tools;36.0.0" "ndk;27.2.12479018" "cmake;3.22.1"
 
       - name: Checkout Submodules
         run: |
@@ -76,7 +93,7 @@ jobs:
           fi
           echo "Found APK at: $APK_PATH"
           cp "$APK_PATH" Opengram.apk
-          echo "apk_path=Opengram.apk" >> $GITHUB_OUTPUT
+          ls -la Opengram.apk
 
       - name: Create GitHub Release and Upload APK
         uses: softprops/action-gh-release@v2
@@ -92,15 +109,16 @@ jobs:
             Welcome to the official release of **Opengram**!
 
             #### ✨ Key Highlights
-            - **Ghost Mode & Stealth Suite**: Read receipts suppression, hidden typing status, anonymous story views, and unrestricted screenshots.
-            - **Unlimited Pinned Chats**: Pin up to 100 chats per folder and in the main list.
-            - **Free Voice-to-Text Transcription**: Enabled for all voice and video notes.
-            - **Clean Forwarding**: Forward messages without sender quotes or headers.
-            - **Material You / Monet Theming & AMOLED**: Smooth dynamic theming and high-performance animations.
+            - **Privacy & Ghost Mode**: Stealth reading, typing indicators suppression, anonymous story viewing, and app switcher preview masking.
+            - **Accidental Send Confirmation**: Optional confirmation prompt before sending messages to sensitive chats.
+            - **Clean Settings Architecture**: Reorganized into 8 intuitive categories (Appearance, Chats, Messages, Media, Notifications, Privacy, Calls, Advanced).
+            - **Call Audio & Transparency**: Audio source selection and honest technical documentation on Android call recording boundaries.
+            - **100% Ad-Free**: Fully purged AdsGram tracking and third-party ad injection.
+            - **Unlimited Pinned Chats**: Pin up to 100 chats in your folders and chats list.
+            - **Clean Forwarding**: Forward messages without sender quotes or captions.
 
             #### 📲 Installation
             1. Download `Opengram.apk` below.
             2. Tap to install on your Android device (Android 7.0+).
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
