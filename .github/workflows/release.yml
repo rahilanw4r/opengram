@@ -62,6 +62,14 @@ jobs:
           git clone --depth 1 https://github.com/abseil/abseil-cpp.git TMessagesProj/jni/third_party/absl
           test -f TMessagesProj_Modules/media/core_settings.gradle
 
+          # CMake expects the Telegram tgcalls sources, but this repository's
+          # .gitmodules entry is not represented by a gitlink. Fetch a pinned
+          # upstream revision explicitly to keep CI reproducible.
+          git clone --depth 1 --branch development https://github.com/TelegramMessenger/tgcalls.git TMessagesProj/jni/tgcalls
+          git -C TMessagesProj/jni/tgcalls checkout --detach 38dcea121f10638c42098f226f05c298a392f95c
+          test -f TMessagesProj/jni/tgcalls/tgcalls/AudioDeviceHelper.cpp
+          test -f TMessagesProj/jni/tgcalls/tgcalls/platform/android/AndroidInterface.cpp
+
       - name: Generate CI Release Keystore
         run: |
           keytool -genkey -v -keystore Your_Key.jks \
