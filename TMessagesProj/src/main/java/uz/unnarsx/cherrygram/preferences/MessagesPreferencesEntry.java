@@ -38,7 +38,7 @@ public class MessagesPreferencesEntry extends BaseCGPreferencesEntry {
     private final int messageMenuRow = 1, messageSizeRow = 2, directShareRow = 3,
             wideMessagesLayout = 4, hideTimeOnStickersRow = 5, showForwardDateRow = 6, pencilIconForEditedRow = 7;
 
-    private final int geminiSettingsRow = 8, voiceTranscriptionRow = 9;
+    private final int geminiSettingsRow = 8, voiceTranscriptionRow = 9, freeVoiceTranscriptionRow = 19;
 
     private final int messageFilterRow = 10, leftBottomBtnRow = 11, doubleTapRow = 12, slideActionRow = 13, deleteForAllRow = 14;
 
@@ -97,6 +97,10 @@ public class MessagesPreferencesEntry extends BaseCGPreferencesEntry {
                         getString(R.string.CP_GeminiAI_Header)
                 )
                 .slug(DeeplinkHelper.DeepLinksRepo.CG_Gemini)
+        );
+        items.add(SettingsHelper.asSwitchCG(freeVoiceTranscriptionRow, "Free Voice Transcription", "Enable voice-to-text button on all voice and video messages")
+                .setChecked(CherrygramMessagesConfig.INSTANCE.getFreeVoiceTranscription())
+                .slug("freeVoiceTranscription")
         );
         items.add(UItem.asButton(voiceTranscriptionRow, getString(R.string.CP_GeminiAI_VoiceTranscriptionProvider), getTranscriptionProviderValue())
                 .slug("vttProvider")
@@ -169,6 +173,9 @@ public class MessagesPreferencesEntry extends BaseCGPreferencesEntry {
         } else if (item.id == pencilIconForEditedRow) {
             CherrygramMessagesConfig.INSTANCE.setShowPencilIcon(!CherrygramMessagesConfig.INSTANCE.getShowPencilIcon());
             SettingsHelper.updateCheckState(view, CherrygramMessagesConfig.INSTANCE.getShowPencilIcon());
+        } else if (item.id == freeVoiceTranscriptionRow) {
+            CherrygramMessagesConfig.INSTANCE.setFreeVoiceTranscription(!CherrygramMessagesConfig.INSTANCE.getFreeVoiceTranscription());
+            SettingsHelper.updateCheckState(view, CherrygramMessagesConfig.INSTANCE.getFreeVoiceTranscription());
         } else if (item.id == geminiSettingsRow) {
             CherrygramPreferencesNavigator.INSTANCE.createGemini(this);
         } else if (item.id == voiceTranscriptionRow) {

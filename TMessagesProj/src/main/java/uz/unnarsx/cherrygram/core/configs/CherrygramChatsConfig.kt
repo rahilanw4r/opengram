@@ -40,6 +40,8 @@ object CherrygramChatsConfig: CoroutineScope by CoroutineScope(
     var unreadBadgeOnBackButton_iOS by sharedPreferences.boolean("CP_UnreadBadgeOnBackButton_iOS", centerChatTitle)
 
     /** Chat shortcuts start */
+    var unlimitedPinnedChats by sharedPreferences.boolean("CP_UnlimitedPinnedChats", true)
+    var skipSilenceInAudio by sharedPreferences.boolean("CP_SkipSilenceInAudio", false)
     var shortcut_JumpToBegin by sharedPreferences.boolean("CP_Shortcut_JumpToBegin", true)
     var shortcut_DeleteAll by sharedPreferences.boolean("CP_Shortcut_DeleteAll", true)
     var shortcut_SavedMessages by sharedPreferences.boolean("CP_Shortcut_SavedMessages", false)

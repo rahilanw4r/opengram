@@ -58,6 +58,11 @@ public class PrivacyPreferencesEntry extends BaseCGPreferencesEntry {
     private final int googleAnalyticsRow = 10;
     private final int deleteAccountRow = 11;
 
+    private final int stealthReadRow = 20;
+    private final int hideTypingRow = 21;
+    private final int hideStoriesViewRow = 22;
+    private final int allowScreenshotsRow = 23;
+
     private final int hideArchivedStoriesRow = 1390;
 
     private boolean expandedBiometricSection = false;
@@ -79,6 +84,21 @@ public class PrivacyPreferencesEntry extends BaseCGPreferencesEntry {
 
     @Override
     protected void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
+        items.add(UItem.asHeader("Ghost Mode & Stealth"));
+        items.add(SettingsHelper.asSwitchCG(stealthReadRow, "Stealth Reading", "Read messages without sending read receipts")
+                .setChecked(CherrygramPrivacyConfig.INSTANCE.getStealthReadMessages())
+        );
+        items.add(SettingsHelper.asSwitchCG(hideTypingRow, "Hide Typing Status", "Never send typing or recording indicators")
+                .setChecked(CherrygramPrivacyConfig.INSTANCE.getHideTypingStatus())
+        );
+        items.add(SettingsHelper.asSwitchCG(hideStoriesViewRow, "Anonymous Story Viewing", "View stories without appearing in viewer list")
+                .setChecked(CherrygramPrivacyConfig.INSTANCE.getHideStoryViews())
+        );
+        items.add(SettingsHelper.asSwitchCG(allowScreenshotsRow, "Allow Screenshots Everywhere", "Permit screenshots in secret chats and self-destruct media")
+                .setChecked(CherrygramPrivacyConfig.INSTANCE.getAllowScreenshotsAnywhere())
+        );
+        items.add(UItem.asShadow(null));
+
         items.add(UItem.asHeader(getString(R.string.FilterChats)));
         if ((CherrygramCoreConfig.isStandalonePremiumBuild() || CherrygramCoreConfig.isDevBuild()) && (getUserConfig().clientUserId == 6578415824L || getUserConfig().clientUserId == Constants.Cherrygram_Owner)) {
             items.add(SettingsHelper.asSwitchCG(hideArchivedStoriesRow, "Скрыть архивированные истории", "Скрывает раздел архивированных историй в профиле")
@@ -172,7 +192,19 @@ public class PrivacyPreferencesEntry extends BaseCGPreferencesEntry {
 
     @Override
     protected void onClick(UItem item, View view, int position, float x, float y) {
-        if (item.id == hideArchivedStoriesRow) {
+        if (item.id == stealthReadRow) {
+            CherrygramPrivacyConfig.INSTANCE.setStealthReadMessages(!CherrygramPrivacyConfig.INSTANCE.getStealthReadMessages());
+            SettingsHelper.updateCheckState(view, CherrygramPrivacyConfig.INSTANCE.getStealthReadMessages());
+        } else if (item.id == hideTypingRow) {
+            CherrygramPrivacyConfig.INSTANCE.setHideTypingStatus(!CherrygramPrivacyConfig.INSTANCE.getHideTypingStatus());
+            SettingsHelper.updateCheckState(view, CherrygramPrivacyConfig.INSTANCE.getHideTypingStatus());
+        } else if (item.id == hideStoriesViewRow) {
+            CherrygramPrivacyConfig.INSTANCE.setHideStoryViews(!CherrygramPrivacyConfig.INSTANCE.getHideStoryViews());
+            SettingsHelper.updateCheckState(view, CherrygramPrivacyConfig.INSTANCE.getHideStoryViews());
+        } else if (item.id == allowScreenshotsRow) {
+            CherrygramPrivacyConfig.INSTANCE.setAllowScreenshotsAnywhere(!CherrygramPrivacyConfig.INSTANCE.getAllowScreenshotsAnywhere());
+            SettingsHelper.updateCheckState(view, CherrygramPrivacyConfig.INSTANCE.getAllowScreenshotsAnywhere());
+        } else if (item.id == hideArchivedStoriesRow) {
             CherrygramPrivacyConfig.INSTANCE.setHideArchivedStories(!CherrygramPrivacyConfig.INSTANCE.getHideArchivedStories());
             SettingsHelper.updateCheckState(view, CherrygramPrivacyConfig.INSTANCE.getHideArchivedStories());
 
