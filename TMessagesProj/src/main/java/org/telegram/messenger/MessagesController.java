@@ -11417,6 +11417,9 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public boolean sendTyping(long dialogId, long threadMsgId, int action, String emojicon, int classGuid) {
+        if (uz.unnarsx.cherrygram.core.configs.CherrygramPrivacyConfig.INSTANCE.getHideTypingStatus()) {
+            return false;
+        }
         if (action < 0 || action >= sendingTypings.length || dialogId == 0) {
             return false;
         }
@@ -14595,6 +14598,9 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     private void completeReadTask(ReadTask task) {
+        if (uz.unnarsx.cherrygram.core.configs.CherrygramPrivacyConfig.INSTANCE.getStealthReadMessages() && task.dialogId > 0) {
+            return;
+        }
         if (task.replyId != 0 && task.monoForumPeerId == 0) {
             TLRPC.TL_messages_readDiscussion req = new TLRPC.TL_messages_readDiscussion();
             req.msg_id = (int) task.replyId;

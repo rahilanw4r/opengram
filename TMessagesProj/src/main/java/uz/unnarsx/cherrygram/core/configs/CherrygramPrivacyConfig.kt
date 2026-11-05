@@ -34,7 +34,15 @@ object CherrygramPrivacyConfig: CoroutineScope by CoroutineScope(
 
     /** Privacy start */
     var hideProxySponsor by sharedPreferences.boolean("SP_NoProxySponsor", true)
-    var googleAnalytics by sharedPreferences.boolean("SP_GoogleAnalytics1", true)
+    var googleAnalytics by sharedPreferences.boolean("SP_GoogleAnalytics1", false)
+
+    /** Ghost Mode & Stealth start */
+    var stealthReadMessages by sharedPreferences.boolean("SP_StealthReadMessages", false)
+    var hideTypingStatus by sharedPreferences.boolean("SP_HideTypingStatus", false)
+    var hideStoryViews by sharedPreferences.boolean("SP_HideStoryViews", false)
+    var allowScreenshotsAnywhere by sharedPreferences.boolean("SP_AllowScreenshotsAnywhere", true)
+    var antiDeleteMessages by sharedPreferences.boolean("SP_AntiDeleteMessages", true)
+    /** Ghost Mode & Stealth finish */
     /** Privacy finish */
 
     /** Passcode lock start */

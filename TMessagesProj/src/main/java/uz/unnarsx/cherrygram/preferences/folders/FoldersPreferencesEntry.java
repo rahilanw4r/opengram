@@ -55,6 +55,7 @@ public class FoldersPreferencesEntry extends BaseCGPreferencesEntry {
     private final int foldersAtBottomRow = 7;
 
     private final int telegramFoldersSettings = 8;
+    private final int unlimitedPinnedChatsRow = 9;
 
     @Override
     protected CharSequence getTitle() {
@@ -102,6 +103,10 @@ public class FoldersPreferencesEntry extends BaseCGPreferencesEntry {
         items.add(SettingsHelper.asSwitchCG(foldersAtBottomRow, applyProSpan(getString(R.string.AP_FoldersAtBottom), getResourceProvider()))
                 .setChecked(CherrygramAppearanceConfig.INSTANCE.getFoldersAtBottom()).setLocked(!DonatesManager.INSTANCE.didUserDonateForFeature())
                 .slug("foldersAtBottom")
+        );
+        items.add(SettingsHelper.asSwitchCG(unlimitedPinnedChatsRow, "Unlimited Pinned Chats", "Allow pinning up to 100 chats in your folders and chats list")
+                .setChecked(CherrygramChatsConfig.INSTANCE.getUnlimitedPinnedChats())
+                .slug("unlimitedPinnedChats")
         );
         items.add(UItem.asShadow(null));
 
@@ -181,6 +186,9 @@ public class FoldersPreferencesEntry extends BaseCGPreferencesEntry {
             if (parentLayout != null) parentLayout.rebuildAllFragmentViews(false, false);
 
             getNotificationCenter().postNotificationName(NotificationCenter.dialogFiltersUpdated);
+        } else if (item.id == unlimitedPinnedChatsRow) {
+            CherrygramChatsConfig.INSTANCE.setUnlimitedPinnedChats(!CherrygramChatsConfig.INSTANCE.getUnlimitedPinnedChats());
+            SettingsHelper.updateCheckState(view, CherrygramChatsConfig.INSTANCE.getUnlimitedPinnedChats());
         } else if (item.id == foldersAtBottomRow) {
             if (!DonatesManager.INSTANCE.didUserDonateForFeature()) {
                 AndroidUtilities.shakeViewSpring(view);

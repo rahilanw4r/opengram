@@ -1304,6 +1304,9 @@ public class StoriesController {
         NotificationsController.getInstance(currentAccount).processReadStories(dialogId, newReadId);
         userStories.max_read_id = newReadId;
         dialogIdToMaxReadId.put(dialogId, newReadId);
+        if (uz.unnarsx.cherrygram.core.configs.CherrygramPrivacyConfig.INSTANCE.getHideStoryViews()) {
+            return false;
+        }
         if (newReadId > currentReadId) {
             if (!profile) {
                 storiesStorage.updateMaxReadId(dialogId, newReadId);
