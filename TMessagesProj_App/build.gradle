@@ -235,10 +235,21 @@ android {
 
 static def loadEnv(filePath) {
     def env = [:]
-    Files.lines(Paths.get(filePath)).each { line ->
+    def envFile = new File(filePath)
+
+    // Local CI settings are optional. Never require or commit this file in CI.
+    if (!envFile.isFile()) {
+        return env
+    }
+
+    envFile.eachLine { line ->
         if (line && !line.startsWith("#")) {
-            def (key, value) = line.split('=', 2)
-            env[key.trim()] = value?.trim()
+            def separator = line.indexOf('=')
+            if (separator > 0) {
+                def key = line.substring(0, separator).trim()
+                def value = line.substring(separator + 1).trim()
+                env[key] = value
+            }
         }
     }
     return env
@@ -266,10 +277,12 @@ static def isWindowsOrMacOS() {
 }
 
 def desktopPath
+def desktopUsername = project.ext.has('SYSTEM_USERNAME') ?
+        project.ext.get('SYSTEM_USERNAME') : System.getProperty('user.name')
 if (isWindows()) {
-    desktopPath = "C:/Users/${SYSTEM_USERNAME}/Desktop/Opengram/Stable"
+    desktopPath = "C:/Users/${desktopUsername}/Desktop/Opengram/Stable"
 } else if (isMacOS()) {
-    desktopPath = "/Users/${SYSTEM_USERNAME}/Desktop/Opengram/Stable"
+    desktopPath = "/Users/${desktopUsername}/Desktop/Opengram/Stable"
 }
 
 tasks.register('copyFiles', Copy) {
