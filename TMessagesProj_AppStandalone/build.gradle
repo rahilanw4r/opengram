@@ -301,6 +301,17 @@ def apkFilePath3 = "${projectDir}/afat/standalone/${fileName3}"
 
 tasks.register('sendApk') {
     doLast {
+        // Telegram delivery is optional for GitHub Actions APK builds.
+        // Do not log credential values or require local secrets in CI.
+        def requiredTelegramSettings = ['TG_APP_ID', 'TG_APP_HASH', 'TELEGRAM_BOT_TOKEN', 'TELEGRAM_CHAT_ID']
+        def missingTelegramSettings = requiredTelegramSettings.findAll { key ->
+            !project.ext.has(key) || !project.ext.get(key)?.toString()?.trim()
+        }
+        if (!missingTelegramSettings.isEmpty()) {
+            println "Skipping Telegram APK upload: Telegram credentials are not configured."
+            return
+        }
+
         def file1 = new File(apkFilePath)
         def file2 = new File(apkFilePath2)
         def file3 = new File(apkFilePath3)
