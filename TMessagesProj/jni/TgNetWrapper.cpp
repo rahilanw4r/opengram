@@ -13,8 +13,9 @@
 #include <openssl/pem.h>
 #include <openssl/aes.h>
 
-#include "security/secure_validator.hpp"
-#include "security/skCrypter.hpp"
+#ifndef skCrypt
+#define skCrypt(str) (str)
+#endif
 
 JavaVM *java;
 
@@ -462,7 +463,6 @@ void setSystemLangCode(JNIEnv *env, jclass c, jint instanceNum, jstring langCode
     const char *langCodeStr = env->GetStringUTFChars(langCode, 0);
 
     ConnectionsManager::getInstance(instanceNum).setSystemLangCode(std::string(langCodeStr));
-    secure_validator::maybeForceDisconnectOrUpdate(env, instanceNum, 3);
 
     if (langCodeStr != 0) {
         env->ReleaseStringUTFChars(langCode, langCodeStr);
@@ -483,7 +483,6 @@ void init(JNIEnv *env, jclass c, jint instanceNum, jint version, jint layer, jin
     const char *packageIdStr = env->GetStringUTFChars(packageId, 0);
 
     ConnectionsManager::getInstance(instanceNum).init((uint32_t) version, layer, apiId, std::string(deviceModelStr), std::string(systemVersionStr), std::string(appVersionStr), std::string(langCodeStr), std::string(systemLangCodeStr), std::string(configPathStr), std::string(logPathStr), std::string(regIdStr), std::string(cFingerprintStr), std::string(installerIdStr), std::string(packageIdStr), timezoneOffset, userId, userPremium, true, enablePushConnection, hasNetwork, networkType, performanceClass);
-    secure_validator::maybeForceDisconnectOrUpdate(env, instanceNum, 3);
 
     if (deviceModelStr != 0) {
         env->ReleaseStringUTFChars(deviceModel, deviceModelStr);
@@ -691,17 +690,10 @@ extern "C" int registerNativeTgNetFunctions(JavaVM *vm, JNIEnv *env) {
         return JNI_FALSE;
     }
 
-//    if (secure_validator::has_jni_hook(env) || secure_validator::has_xhook() || !secure_validator::validate_signature(env)) {
-//        jclass_ConnectionsManager_onUpdate = env->GetStaticMethodID(jclass_ConnectionsManager, skCrypt("onLogout"), skCrypt("(I)V"));
-//        if (jclass_ConnectionsManager_onUpdate == nullptr) {
-//            return JNI_FALSE;
-//        }
-//    } else {
-        jclass_ConnectionsManager_onUpdate = env->GetStaticMethodID(jclass_ConnectionsManager, skCrypt("onUpdate"), skCrypt("(I)V"));
-//        if (jclass_ConnectionsManager_onUpdate == nullptr) {
-//            return JNI_FALSE;
-//        }
-//    }
+    jclass_ConnectionsManager_onUpdate = env->GetStaticMethodID(jclass_ConnectionsManager, skCrypt("onUpdate"), skCrypt("(I)V"));
+    if (jclass_ConnectionsManager_onUpdate == nullptr) {
+        return JNI_FALSE;
+    }
 
     jclass_ConnectionsManager_onIntegrityCheckClassic = env->GetStaticMethodID(jclass_ConnectionsManager, skCrypt("onIntegrityCheckClassic"), skCrypt("(IILjava/lang/String;Ljava/lang/String;)V"));
     if (jclass_ConnectionsManager_onIntegrityCheckClassic == 0) {
