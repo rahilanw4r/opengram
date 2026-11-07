@@ -56,15 +56,32 @@ jobs:
         run: |
           set -euxo pipefail
           # media3 must be checked out from the Telegram-compatible fork/branch.
-          git clone --depth 1 --branch telegram-v1.10.1-ffmpeg https://github.com/Arseny271/media.git TMessagesProj_Modules/media
+          rm -rf TMessagesProj_Modules/media && git clone --depth 1 --branch telegram-v1.10.1-ffmpeg https://github.com/Arseny271/media.git TMessagesProj_Modules/media
           # Pin tgcalls to a known upstream revision; native CMake depends on its Android and audio helper sources.
-          git clone https://github.com/TelegramMessenger/tgcalls.git TMessagesProj/jni/tgcalls
+          rm -rf TMessagesProj/jni/tgcalls && git clone https://github.com/TelegramMessenger/tgcalls.git TMessagesProj/jni/tgcalls
           git -C TMessagesProj/jni/tgcalls checkout --detach 38dcea121f10638c42098f226f05c298a392f95c
           test -f TMessagesProj/jni/tgcalls/tgcalls/AudioDeviceHelper.cpp
           test -f TMessagesProj/jni/tgcalls/tgcalls/platform/android/AndroidInterface.cpp
-          git clone --depth 1 https://github.com/dkaraush/jlatexmath-android.git TMessagesProj/lib/jlatexmath
-          git clone --depth 1 https://chromium.googlesource.com/libyuv/libyuv TMessagesProj/jni/third_party/libyuv
-          git clone --depth 1 https://github.com/abseil/abseil-cpp.git TMessagesProj/jni/third_party/absl
+          rm -rf TMessagesProj/lib/jlatexmath && git clone --depth 1 https://github.com/dkaraush/jlatexmath-android.git TMessagesProj/lib/jlatexmath
+          rm -rf TMessagesProj/jni/third_party/libyuv && git clone --depth 1 https://chromium.googlesource.com/libyuv/libyuv TMessagesProj/jni/third_party/libyuv
+          rm -rf TMessagesProj/jni/third_party/absl && git clone --depth 1 https://github.com/abseil/abseil-cpp.git TMessagesProj/jni/third_party/absl
+
+          # Native sources and headers required by CMakeLists.txt
+          rm -rf TMessagesProj/jni/third_party/xiph/ogg && git clone --depth 1 https://github.com/xiph/ogg.git TMessagesProj/jni/third_party/xiph/ogg
+          rm -rf TMessagesProj/jni/third_party/xiph/opusfile && git clone --depth 1 https://github.com/xiph/opusfile.git TMessagesProj/jni/third_party/xiph/opusfile
+          rm -rf TMessagesProj/jni/third_party/xiph/opus && git clone --depth 1 https://github.com/xiph/opus.git TMessagesProj/jni/third_party/xiph/opus
+          rm -rf TMessagesProj/jni/third_party/boost-regex && git clone --depth 1 https://github.com/boostorg/regex.git TMessagesProj/jni/third_party/boost-regex
+          rm -rf TMessagesProj/jni/third_party/libprisma && git clone --depth 1 https://github.com/TelegramMessenger/libprisma.git TMessagesProj/jni/third_party/libprisma
+          rm -rf TMessagesProj/jni/third_party/boringssl && git clone --depth 1 https://github.com/google/boringssl.git TMessagesProj/jni/third_party/boringssl
+          rm -rf TMessagesProj/jni/third_party/ffmpeg && git clone --depth 1 https://github.com/FFmpeg/FFmpeg.git TMessagesProj/jni/third_party/ffmpeg
+          rm -rf TMessagesProj/jni/third_party/dav1d && git clone --depth 1 https://github.com/videolan/dav1d.git TMessagesProj/jni/third_party/dav1d
+          rm -rf TMessagesProj/jni/third_party/libvpx && git clone --depth 1 https://github.com/webmproject/libvpx.git TMessagesProj/jni/third_party/libvpx
+          rm -rf TMessagesProj/jni/third_party/openh264 && git clone --depth 1 https://github.com/cisco/openh264.git TMessagesProj/jni/third_party/openh264
+          rm -rf TMessagesProj/jni/third_party/wamr && git clone --depth 1 https://github.com/wasm-micro-runtime/wasm-micro-runtime.git TMessagesProj/jni/third_party/wamr
+          rm -rf TMessagesProj/jni/tlottie && git clone --depth 1 https://github.com/dkaraush/tlottie.git TMessagesProj/jni/tlottie
+
+          test -f TMessagesProj/jni/third_party/xiph/opusfile/src/info.c
+          test -f TMessagesProj/jni/third_party/xiph/ogg/src/bitwise.c
           test -f TMessagesProj_Modules/media/core_settings.gradle
 
       - name: Generate CI Release Keystore
@@ -123,30 +140,31 @@ jobs:
 
           collected = []
 
-          # 1. Collect any CMake output / error logs in .cxx
-          for root, dirs, files in os.walk('.'):
-              for f in files:
-                  if f in ['build_output.txt', 'cmake_output.txt', 'build_command.txt'] or 'cmake' in f.lower():
-                      p = os.path.join(root, f)
-                      try:
-                          c = open(p, 'r', errors='ignore').read().strip()
-                          if c:
-                              collected.append(f'=== {p} ===\n' + c[-3000:])
-                      except Exception:
-                          pass
-
-          # 2. Extract error context lines from gradle_build.log
+          # 1. Extract error context lines from gradle_build.log FIRST
           if os.path.exists('gradle_build.log'):
               lines = open('gradle_build.log', 'r', errors='ignore').readlines()
               seen_blocks = set()
               for i, line in enumerate(lines):
                   if any(k in line for k in ['CMake Error', 'FAILED:', 'error:', 'fatal error:', '* What went wrong:']):
-                      start = max(0, i - 10)
-                      end = min(len(lines), i + 35)
+                      start = max(0, i - 20)
+                      end = min(len(lines), i + 40)
                       block = ''.join(lines[start:end])
                       if block not in seen_blocks:
                           seen_blocks.add(block)
                           collected.append(f'=== Gradle Log Match (line {i}) ===\n' + block)
+
+          # 2. Collect only files inside .cxx directories
+          for root, dirs, files in os.walk('.'):
+              if '.cxx' in root:
+                  for f in files:
+                      if f in ['build_output.txt', 'cmake_output.txt', 'build_command.txt']:
+                          p = os.path.join(root, f)
+                          try:
+                              c = open(p, 'r', errors='ignore').read().strip()
+                              if c:
+                                  collected.append(f'=== {p} ===\n' + c[-3000:])
+                          except Exception:
+                              pass
 
           if not collected and os.path.exists('gradle_build.log'):
               collected.append('=== Last 300 Lines of gradle_build.log ===\n' + ''.join(open('gradle_build.log', 'r', errors='ignore').readlines()[-300:]))
