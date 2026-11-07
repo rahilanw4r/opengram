@@ -8902,7 +8902,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             int maxPinnedCount;
             if (containsFilter && filter != null) {
                 maxPinnedCount = 100 - filter.alwaysShow.size();
-            if (uz.unnarsx.cherrygram.core.configs.CherrygramChatsConfig.INSTANCE.getUnlimitedPinnedChats()) {
+            } else if (uz.unnarsx.cherrygram.core.configs.CherrygramChatsConfig.INSTANCE.getUnlimitedPinnedChats()) {
                 maxPinnedCount = 100;
             } else if (folderId != 0 || filter != null) {
                 if (getUserConfig().isPremium()) {
@@ -9423,7 +9423,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             int maxPinnedCount;
             if (containsFilter) {
                 maxPinnedCount = 100 - filter.alwaysShow.size();
-            if (uz.unnarsx.cherrygram.core.configs.CherrygramChatsConfig.INSTANCE.getUnlimitedPinnedChats()) {
+            } else if (uz.unnarsx.cherrygram.core.configs.CherrygramChatsConfig.INSTANCE.getUnlimitedPinnedChats()) {
                 maxPinnedCount = 100;
             } else if (folderId != 0 || filter != null) {
                 if (UserConfig.getInstance(currentAccount).isPremium()) {
