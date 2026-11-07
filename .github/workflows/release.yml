@@ -111,6 +111,42 @@ jobs:
           path: gradle_build.log
           if-no-files-found: ignore
 
+      - name: Report Build Failure to Commit Comments
+        if: failure()
+        run: |
+          python3 -c "
+          import urllib.request, json, os
+
+          token = os.environ.get('GITHUB_TOKEN', '')
+          repo = os.environ.get('GITHUB_REPOSITORY', '')
+          sha = os.environ.get('GITHUB_SHA', '')
+
+          log_text = 'No log available'
+          if os.path.exists('gradle_build.log'):
+              with open('gradle_build.log', 'r', errors='ignore') as f:
+                  lines = f.readlines()
+                  log_text = ''.join(lines[-150:])[:60000]
+
+          body = f'### CI Build Failure Log ({sha})\n\`\`\`\n{log_text}\n\`\`\`'
+          url = f'https://api.github.com/repos/{repo}/commits/{sha}/comments'
+          req = urllib.request.Request(
+              url,
+              data=json.dumps({'body': body}).encode('utf-8'),
+              headers={
+                  'Authorization': f'token {token}',
+                  'Accept': 'application/vnd.github.v3+json',
+                  'User-Agent': 'CI-Failure-Reporter'
+              }
+          )
+          try:
+              with urllib.request.urlopen(req) as resp:
+                  print('Posted failure log to commit comment, status:', resp.status)
+          except Exception as e:
+              print('Failed to post commit comment:', e)
+          "
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Locate and Prepare APK
         run: |
           echo "Looking for built APKs..."
