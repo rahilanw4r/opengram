@@ -499,8 +499,6 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                 if (button != null) {
                     button.setTextColor(Theme.getColor(Theme.key_text_RedBold));
                 }
-            } else if (position == safeSurfRow) {
-                Browser.openAsInternalIntent(getContext(), CherrygramFirebaseConfig.INSTANCE.getSafe_surf_URL());
             }
         });
         listView.setOnItemLongClickListener((view, position) -> {
@@ -603,10 +601,8 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
 
     private void updateRows(boolean notify) {
         rowCount = 0;
-        if (CherrygramFirebaseConfig.INSTANCE.getAllowSafeSurf()) {
-            safeSurfRow = rowCount++;
-            safeSurfShadowRow = rowCount++;
-        }
+        safeSurfRow = -1;
+        safeSurfShadowRow = -1;
         useProxyRow = rowCount++;
         if (useProxySettings && SharedConfig.currentProxy != null && SharedConfig.proxyList.size() > 1 && IS_PROXY_ROTATION_AVAILABLE) {
             rotationRow = rowCount++;
@@ -917,12 +913,6 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                     break;
                 }
                 case VIEW_TYPE_TEXT_CELL: {
-                    TextCell textCell = (TextCell) holder.itemView;
-
-                    if (position == safeSurfRow) {
-                        textCell.getImageView().clearColorFilter();
-                        textCell.setTextAndIcon("SafeSurf VPN", R.drawable.safesurf_logo, false);
-                    }
                     break;
                 }
             }
@@ -968,7 +958,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
         @Override
         public boolean isEnabled(RecyclerView.ViewHolder holder) {
             int position = holder.getAdapterPosition();
-            return position == useProxyRow || position == rotationRow || position == proxyAddRow || position == deleteAllRow || position >= proxyStartRow && position < proxyEndRow || position == safeSurfRow;
+            return position == useProxyRow || position == rotationRow || position == proxyAddRow || position == deleteAllRow || position >= proxyStartRow && position < proxyEndRow;
         }
 
         @Override
@@ -1034,10 +1024,6 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                 return -11;
             } else if (position >= proxyStartRow && position < proxyEndRow) {
                 return proxyList.get(position - proxyStartRow).hashCode();
-            } else if (position == safeSurfRow) {
-                return -1390;
-            } else if (position == safeSurfShadowRow) {
-                return -1391;
             } else {
                 return -7;
             }
@@ -1057,8 +1043,6 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                 return VIEW_TYPE_SLIDE_CHOOSER;
             } else if (position >= proxyStartRow && position < proxyEndRow) {
                 return VIEW_TYPE_PROXY_DETAIL;
-            } else if (position == safeSurfRow) {
-                return VIEW_TYPE_TEXT_CELL;
             } else {
                 return VIEW_TYPE_INFO;
             }

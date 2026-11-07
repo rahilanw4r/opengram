@@ -19200,7 +19200,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
 
                 if (currentUser != null && currentNameStatus instanceof Long) {
                     boolean isCGPremium = false; // cgPremium
-                    boolean forceBra = currentUser.id == Constants.Cherrygram_Owner;
+                    boolean forceBra = false;
                     boolean showParticles = isCGPremium || forceBra || DonatesManager.INSTANCE.didUserDonateForMarketplace(currentUser.id);
                     boolean isCherryEmojiApplied = currentNameStatus != null && ((long) currentNameStatus == Constants.CHERRY_EMOJI_ID_VERIFIED || (long) currentNameStatus == Constants.CHERRY_EMOJI_ID_VERIFIED_BRA);
 
@@ -19961,7 +19961,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
 
             boolean isCGPremium = false; // cgPremium
             boolean isDonated = DonatesManager.INSTANCE.didUserDonate(currentUser.id);
-            boolean forceBra = currentUser.id == Constants.Cherrygram_Owner;
+            boolean forceBra = false;
 
             if (emojiStatusId == null && isCGPremium && isDonated) {
                 emojiStatusId = Constants.CHERRY_EMOJI_ID_VERIFIED_BRA;

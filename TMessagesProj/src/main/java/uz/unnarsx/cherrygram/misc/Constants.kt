@@ -53,19 +53,12 @@ object Constants {
     const val PACKAGE_NAME = "org.gram.messenger"
 
     /** CG Chats IDs start */
-    const val Cherrygram_Owner = 0L
     const val Cherrygram_Channel = 0L
     const val Cherrygram_Support = 0L
     const val Cherrygram_APKs = 0L
     const val Cherrygram_Beta = 0L
     const val Cherrygram_Archive = 0L
     /** CG Chats IDs finish */
-
-    /** OWNer's friends start */
-    const val Yuki = 0L
-    const val Alina = 0L
-    const val Samir = 0L
-    /** OWNer's friends finish */
 
     /** Misc start */
     const val CHERRY_EMOJI_ID = 5220045200780458122L // Cherrygram logo

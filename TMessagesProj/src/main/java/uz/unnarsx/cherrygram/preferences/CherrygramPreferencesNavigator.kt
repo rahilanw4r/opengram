@@ -58,9 +58,7 @@ object CherrygramPreferencesNavigator {
 
     @JvmOverloads
     fun createDonate(fragment: BaseFragment, force: Boolean = false): BaseFragment =
-        DonatesPreferencesEntry().forceShowDonates(force).also(fragment::presentFragment)
-
-    fun createStars(fragment: BaseFragment, customTitle: String?, userName: String?, type: Int) = fragment.presentFragment(StarsIntroActivityCG(customTitle, userName, type))
+        AboutPreferencesEntry().also(fragment::presentFragment)
 
     fun createAbout(fragment: BaseFragment): BaseFragment =
         AboutPreferencesEntry().also(fragment::presentFragment)

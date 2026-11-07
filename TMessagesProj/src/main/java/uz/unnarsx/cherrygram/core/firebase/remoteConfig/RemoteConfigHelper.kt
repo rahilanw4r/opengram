@@ -251,20 +251,6 @@ object RemoteConfigHelper {
         checkVideoMessagesResolution()
         checkMinCherryVersion()
 
-        checkHumoCardNumber()
-        checkTBankCardNumber()
-
-        checkSafeStars()
-        checkSafeSurf()
-        checkSafeStarsURL()
-        checkSafeStarsURL_RU()
-        checkSafeSurfURL()
-        checkSafePay()
-        checkSafePayURL()
-
-        checkEdify()
-        checkEdifyURL()
-
         checkRecordOOMasNonFatal()
         checkUseCGOOMHandler()
 
@@ -299,83 +285,6 @@ object RemoteConfigHelper {
         ::getString,
         { CherrygramCoreConfig.minCherryVersionGP },
         { CherrygramCoreConfig.minCherryVersionGP = it }
-    )
-
-    private fun checkHumoCardNumber() = checkAndUpdate(
-        RemoteConfigConstants.humo_card_number,
-        ::getString,
-        { CherrygramFirebaseConfig.humoCardNumber },
-        { CherrygramFirebaseConfig.humoCardNumber = it }
-    )
-
-    private fun checkTBankCardNumber() = checkAndUpdate(
-        RemoteConfigConstants.tbank_card_number,
-        ::getString,
-        { CherrygramFirebaseConfig.tbankCardNumber },
-        { CherrygramFirebaseConfig.tbankCardNumber = it }
-    )
-
-    private fun checkSafeStars() = checkAndUpdate(
-        RemoteConfigConstants.allow_use_safestars,
-        ::getBoolean,
-        { CherrygramFirebaseConfig.allowSafeStars },
-        { CherrygramFirebaseConfig.allowSafeStars = it }
-    )
-
-    private fun checkSafeStarsURL() = checkAndUpdate(
-        RemoteConfigConstants.safe_stars_URL,
-        ::getString,
-        { CherrygramFirebaseConfig.safe_stars_URL },
-        { CherrygramFirebaseConfig.safe_stars_URL = it }
-    )
-
-    private fun checkSafeStarsURL_RU() = checkAndUpdate(
-        RemoteConfigConstants.safe_stars_URL_RU,
-        ::getString,
-        { CherrygramFirebaseConfig.safe_stars_URL_RU },
-        { CherrygramFirebaseConfig.safe_stars_URL_RU = it }
-    )
-
-    private fun checkSafeSurf() = checkAndUpdate(
-        RemoteConfigConstants.allow_use_safesurf,
-        ::getBoolean,
-        { CherrygramFirebaseConfig.allowSafeSurf },
-        { CherrygramFirebaseConfig.allowSafeSurf = it }
-    )
-
-    private fun checkSafeSurfURL() = checkAndUpdate(
-        RemoteConfigConstants.safe_surf_URL,
-        ::getString,
-        { CherrygramFirebaseConfig.safe_surf_URL },
-        { CherrygramFirebaseConfig.safe_surf_URL = it }
-    )
-
-    private fun checkSafePay() = checkAndUpdate(
-        RemoteConfigConstants.allow_use_safepay,
-        ::getBoolean,
-        { CherrygramFirebaseConfig.allowSafePay },
-        { CherrygramFirebaseConfig.allowSafePay = it }
-    )
-
-    private fun checkSafePayURL() = checkAndUpdate(
-        RemoteConfigConstants.safe_pay_URL,
-        ::getString,
-        { CherrygramFirebaseConfig.safe_pay_URL },
-        { CherrygramFirebaseConfig.safe_pay_URL = it }
-    )
-
-    private fun checkEdify() = checkAndUpdate(
-        RemoteConfigConstants.allow_use_edify,
-        ::getBoolean,
-        { CherrygramFirebaseConfig.allowEdify },
-        { CherrygramFirebaseConfig.allowEdify = it }
-    )
-
-    private fun checkEdifyURL() = checkAndUpdate(
-        RemoteConfigConstants.edify_url,
-        ::getString,
-        { CherrygramFirebaseConfig.edify_URL },
-        { CherrygramFirebaseConfig.edify_URL = it }
     )
 
     private fun checkRecordOOMasNonFatal() {

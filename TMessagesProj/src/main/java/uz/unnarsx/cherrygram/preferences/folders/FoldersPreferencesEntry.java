@@ -96,8 +96,8 @@ public class FoldersPreferencesEntry extends BaseCGPreferencesEntry {
                 .setChecked(CherrygramAppearanceConfig.INSTANCE.getFolderNameInHeader())
                 .slug("folderNameInHeader")
         );
-        items.add(SettingsHelper.asSwitchCG(foldersAtBottomRow, applyProSpan(getString(R.string.AP_FoldersAtBottom), getResourceProvider()))
-                .setChecked(CherrygramAppearanceConfig.INSTANCE.getFoldersAtBottom()).setLocked(!DonatesManager.INSTANCE.didUserDonateForFeature())
+        items.add(SettingsHelper.asSwitchCG(foldersAtBottomRow, getString(R.string.AP_FoldersAtBottom))
+                .setChecked(CherrygramAppearanceConfig.INSTANCE.getFoldersAtBottom())
                 .slug("foldersAtBottom")
         );
         items.add(SettingsHelper.asSwitchCG(unlimitedPinnedChatsRow, "Unlimited Pinned Chats", "Allow pinning up to 100 chats in your folders and chats list")
@@ -186,13 +186,6 @@ public class FoldersPreferencesEntry extends BaseCGPreferencesEntry {
             CherrygramChatsConfig.INSTANCE.setUnlimitedPinnedChats(!CherrygramChatsConfig.INSTANCE.getUnlimitedPinnedChats());
             SettingsHelper.updateCheckState(view, CherrygramChatsConfig.INSTANCE.getUnlimitedPinnedChats());
         } else if (item.id == foldersAtBottomRow) {
-            if (!DonatesManager.INSTANCE.didUserDonateForFeature()) {
-                AndroidUtilities.shakeViewSpring(view);
-                BotWebViewVibrationEffect.APP_ERROR.vibrate();
-                showDonateBulletin();
-                return;
-            }
-
             CherrygramAppearanceConfig.INSTANCE.setFoldersAtBottom(!CherrygramAppearanceConfig.INSTANCE.getFoldersAtBottom());
             SettingsHelper.updateCheckState(view, CherrygramAppearanceConfig.INSTANCE.getFoldersAtBottom());
 

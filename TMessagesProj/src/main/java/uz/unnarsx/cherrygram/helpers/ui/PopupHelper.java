@@ -143,25 +143,16 @@ public class PopupHelper {
                 textCell.getCheckBox().setVisibility(View.INVISIBLE);
             }
 
-            boolean requireDonate = donateLock != null && donateLock.get(a) && !DonatesManager.INSTANCE.checkAllDonatedAccountsForMarketplace();
+            boolean requireDonate = false;
             if (requireDonate) textCell.setCheckBoxIcon(R.drawable.permission_locked);
 
             linearLayout.addView(textCell);
             int finalA = a;
             textCell.setOnClickListener(view -> {
-                if (requireDonate) {
-                    AndroidUtilities.shakeViewSpring(view);
-                    BotWebViewVibrationEffect.APP_ERROR.vibrate();
-                    Bulletin.BulletinWindow.BulletinWindowLayout window = Bulletin.BulletinWindow.make(fragment.getParentActivity());
-                    window.setTouchable(true);
-
-                    CGBulletinCreator.INSTANCE.createRequireDonateBulletin(fragment);
-                } else {
-                    boolean newValue = !prefCheck.get(finalA);
-                    prefCheck.set(finalA, newValue);
-                    textCell.setChecked(newValue);
-                    clickListener.get(finalA).run();
-                }
+                boolean newValue = !prefCheck.get(finalA);
+                prefCheck.set(finalA, newValue);
+                textCell.setChecked(newValue);
+                clickListener.get(finalA).run();
             });
         }
 

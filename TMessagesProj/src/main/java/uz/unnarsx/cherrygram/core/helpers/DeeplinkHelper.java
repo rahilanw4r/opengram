@@ -95,11 +95,7 @@ public class DeeplinkHelper {
                 fragment = CherrygramPreferencesNavigator.INSTANCE.createDonate(hostFragment, true);
             }
             case DeepLinksRepo.CG_Stars -> {
-                if (CherrygramFirebaseConfig.INSTANCE.getAllowSafeStars()) {
-                    CherrygramPreferencesNavigator.INSTANCE.createStars(hostFragment, null, null, -1);
-                } else {
-                    new StarsIntroActivity.StarsOptionsSheet(hostFragment.getContext(), hostFragment.getResourceProvider()).show();
-                }
+                new StarsIntroActivity.StarsOptionsSheet(hostFragment.getContext(), hostFragment.getResourceProvider()).show();
                 return;
             }
             case DeepLinksRepo.CG_Experimental -> {
@@ -279,11 +275,7 @@ public class DeeplinkHelper {
                     return;
                 }
                 case DeepLinksRepoDeprecated.CG_Stars -> {
-                    if (CherrygramFirebaseConfig.INSTANCE.getAllowSafeStars()) {
-                        CherrygramPreferencesNavigator.INSTANCE.createStars(fragment, null, null, -1);
-                    } else {
-                        new StarsIntroActivity.StarsOptionsSheet(fragment.getContext(), fragment.getResourceProvider()).show();
-                    }
+                    new StarsIntroActivity.StarsOptionsSheet(fragment.getContext(), fragment.getResourceProvider()).show();
                     return;
                 }
                 case DeepLinksRepoDeprecated.CG_Experimental -> {
@@ -325,7 +317,6 @@ public class DeeplinkHelper {
                 }
                 case DeepLinksRepoDeprecated.CG_Proxy -> {
                     fragment.presentFragment(new ProxyListActivity());
-                    AndroidUtilities.scrollToFragmentRow(fragment.getParentLayout(), "safeSurfRow");
                     return;
                 }
                 case DeepLinksRepoDeprecated.CG_Restart, "cg_reboot", "restart", "reboot" -> {

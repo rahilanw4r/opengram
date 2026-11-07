@@ -4,7 +4,6 @@ import static org.telegram.messenger.AndroidUtilities.dp;
 import static org.telegram.messenger.LocaleController.getCurrencyExpDivider;
 import static org.telegram.messenger.LocaleController.getString;
 
-import static uz.unnarsx.cherrygram.preferences.StarsIntroActivityCG.allowSafeStars;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -155,7 +154,6 @@ import java.util.Objects;
 import uz.unnarsx.cherrygram.chats.helpers.ChatsHelper2;
 import uz.unnarsx.cherrygram.core.configs.CherrygramFirebaseConfig;
 import uz.unnarsx.cherrygram.misc.Constants;
-import uz.unnarsx.cherrygram.preferences.StarsIntroActivityCG;
 
 public class PremiumPreviewFragment extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
     public final static String TRANSACTION_PATTERN = "^(.*?)(?:\\.\\.\\d*|)$";
@@ -1139,7 +1137,7 @@ public class PremiumPreviewFragment extends BaseFragment implements Notification
     }
 
     public static void buyPremium(BaseFragment fragment, SubscriptionTier tier, String source, boolean forcePremium, BillingFlowParams.SubscriptionUpdateParams updateParams) {
-        if (BuildVars.IS_BILLING_UNAVAILABLE && !allowSafeStars()) {
+        if (BuildVars.IS_BILLING_UNAVAILABLE) {
             if (fragment == null) {
                 new PremiumNotAvailableBottomSheet(fragment).show();
             } else {
@@ -1168,13 +1166,6 @@ public class PremiumPreviewFragment extends BaseFragment implements Notification
             }
         }
         SubscriptionTier selectedTier = tier;
-
-        if (selectedTier != null && selectedTier.isSafeStars) {
-            if (fragment != null && fragment.getContext() != null) {
-                StarsIntroActivityCG.openSafeStars(fragment.getContext(), true, ChatsHelper2.INSTANCE.getActiveUsername(fragment.getUserConfig().clientUserId));
-            }
-            return;
-        }
 
         PremiumPreviewFragment.sentPremiumButtonClick();
 
@@ -1312,10 +1303,7 @@ public class PremiumPreviewFragment extends BaseFragment implements Notification
     }
 
     public static String getPremiumButtonText(int currentAccount, SubscriptionTier tier) {
-        if (tier != null && tier.isSafeStars) {
-            return getString(R.string.CG_SafeStars_BuyPremiumButton);
-        }
-        if (BuildVars.IS_BILLING_UNAVAILABLE && !allowSafeStars()) {
+        if (BuildVars.IS_BILLING_UNAVAILABLE) {
             return getString(R.string.SubscribeToPremiumNotAvailable);
         }
 
@@ -2072,20 +2060,6 @@ public class PremiumPreviewFragment extends BaseFragment implements Notification
                 }
             }
 
-            if (CherrygramFirebaseConfig.INSTANCE.getAllowSafeStars()) {
-                TLRPC.TL_premiumSubscriptionOption safeStarsOption = new TLRPC.TL_premiumSubscriptionOption();
-                safeStarsOption.months = 1390;
-                safeStarsOption.currency = "USD";
-                safeStarsOption.amount = 0;
-                safeStarsOption.bot_url = getMessagesController().premiumBotUsername;
-                safeStarsOption.store_product = null;
-
-                SubscriptionTier safeStarsTier = new SubscriptionTier(safeStarsOption);
-                safeStarsTier.isSafeStars = true;
-
-                subscriptionTiers.add(safeStarsTier);
-            }
-
             if (selectedTierIndex == -1) {
                 for (int i = 0; i < subscriptionTiers.size(); i++) {
                     SubscriptionTier tier = subscriptionTiers.get(i);
@@ -2113,7 +2087,7 @@ public class PremiumPreviewFragment extends BaseFragment implements Notification
                 subtitleView.setText(AndroidUtilities.replaceTags(getString(getUserConfig().isPremium() || forcePremium ? R.string.TelegramBusinessSubscribedSubtitleTemp : R.string.TelegramBusinessSubtitleTemp)));
             }
             subtitleView.getLayoutParams().width = Math.min(AndroidUtilities.displaySize.x - dp(42), HintView2.cutInFancyHalf(subtitleView.getText(), subtitleView.getPaint()));
-            boolean tierNotVisible = forcePremium || BuildVars.IS_BILLING_UNAVAILABLE && !allowSafeStars() || IS_PREMIUM_TIERS_UNAVAILABLE || subscriptionTiers.size() <= 1;
+            boolean tierNotVisible = forcePremium || BuildVars.IS_BILLING_UNAVAILABLE || IS_PREMIUM_TIERS_UNAVAILABLE || subscriptionTiers.size() <= 1;
             if (!setTierListViewVisibility || !tierNotVisible) {
                 tierListView.setVisibility(tierNotVisible ? GONE : VISIBLE);
                 setTierListViewVisibility = true;
@@ -2170,7 +2144,7 @@ public class PremiumPreviewFragment extends BaseFragment implements Notification
         if (LocaleController.isRTL) {
             animated = false;
         }
-        if (BuildVars.IS_BILLING_UNAVAILABLE && !allowSafeStars() && selectedTierIndex < subscriptionTiers.size()) {
+        if (BuildVars.IS_BILLING_UNAVAILABLE && selectedTierIndex < subscriptionTiers.size()) {
             premiumButtonView.setButton(getPremiumButtonText(currentAccount, subscriptionTiers.get(selectedTierIndex)), null, animated);
             buttonContainerInternal.setOnClickListener(v -> buyPremium(this));
             return;
@@ -2414,7 +2388,6 @@ public class PremiumPreviewFragment extends BaseFragment implements Notification
 
         public int yOffset;
 
-        public boolean isSafeStars = false;
 
         public SubscriptionTier(TLRPC.TL_premiumSubscriptionOption subscriptionOption) {
             this.subscriptionOption = subscriptionOption;

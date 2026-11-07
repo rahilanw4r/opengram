@@ -1282,7 +1282,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
             long emojiDocumentId;
             boolean isCGPremium = false; // cgPremium
             boolean isDonated = DonatesManager.INSTANCE.didUserDonate(user.id);
-            boolean forceBra = user.id == Constants.Cherrygram_Owner;
+            boolean forceBra = false;
             boolean showParticles = isCGPremium || forceBra || DonatesManager.INSTANCE.didUserDonateForMarketplace(user.id);
 
             if (isCGPremium && isDonated) {
