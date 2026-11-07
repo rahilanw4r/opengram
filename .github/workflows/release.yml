@@ -57,9 +57,8 @@ jobs:
           set -euxo pipefail
           # media3 must be checked out from the Telegram-compatible fork/branch.
           rm -rf TMessagesProj_Modules/media && git clone --depth 1 --branch telegram-v1.10.1-ffmpeg https://github.com/Arseny271/media.git TMessagesProj_Modules/media
-          # Pin tgcalls to a known upstream revision; native CMake depends on its Android and audio helper sources.
-          rm -rf TMessagesProj/jni/tgcalls && git clone https://github.com/TelegramMessenger/tgcalls.git TMessagesProj/jni/tgcalls
-          git -C TMessagesProj/jni/tgcalls checkout --detach 38dcea121f10638c42098f226f05c298a392f95c
+          # Pin tgcalls to official Android branch (dev/android) matching Telegram Android
+          rm -rf TMessagesProj/jni/tgcalls && git clone --depth 1 --branch dev/android https://github.com/TelegramMessenger/tgcalls.git TMessagesProj/jni/tgcalls
           test -f TMessagesProj/jni/tgcalls/tgcalls/AudioDeviceHelper.cpp
           test -f TMessagesProj/jni/tgcalls/tgcalls/platform/android/AndroidInterface.cpp
           rm -rf TMessagesProj/lib/jlatexmath && git clone --depth 1 https://github.com/dkaraush/jlatexmath-android.git TMessagesProj/lib/jlatexmath
