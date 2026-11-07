@@ -78,9 +78,12 @@ jobs:
           rm -rf TMessagesProj/jni/third_party/openh264 && git clone --depth 1 https://github.com/cisco/openh264.git TMessagesProj/jni/third_party/openh264
           rm -rf TMessagesProj/jni/third_party/wamr && git clone --depth 1 https://github.com/wasm-micro-runtime/wasm-micro-runtime.git TMessagesProj/jni/third_party/wamr
           rm -rf TMessagesProj/jni/tlottie && git clone --depth 1 https://github.com/dkaraush/tlottie.git TMessagesProj/jni/tlottie
+          rm -rf TMessagesProj/jni/td && git clone --depth 1 https://github.com/tdlib/td.git TMessagesProj/jni/td
+          rm -rf TMessagesProj/jni/wallet-engine && git clone --depth 1 https://github.com/dkaraush/wallet-engine.git TMessagesProj/jni/wallet-engine
 
           test -f TMessagesProj/jni/third_party/xiph/opusfile/src/info.c
           test -f TMessagesProj/jni/third_party/xiph/ogg/src/bitwise.c
+          test -f TMessagesProj/jni/td/tde2e/td/e2e/e2e_api.h
           test -f TMessagesProj_Modules/media/core_settings.gradle
 
       - name: Generate CI Release Keystore
