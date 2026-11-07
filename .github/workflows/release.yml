@@ -64,7 +64,7 @@ jobs:
           test -f TMessagesProj/jni/tgcalls/tgcalls/platform/android/AndroidInterface.cpp
           rm -rf TMessagesProj/lib/jlatexmath && git clone --depth 1 https://github.com/dkaraush/jlatexmath-android.git TMessagesProj/lib/jlatexmath
           rm -rf TMessagesProj/jni/third_party/libyuv && git clone --depth 1 https://chromium.googlesource.com/libyuv/libyuv TMessagesProj/jni/third_party/libyuv
-          rm -rf TMessagesProj/jni/third_party/absl && git clone --depth 1 https://github.com/abseil/abseil-cpp.git TMessagesProj/jni/third_party/absl
+          rm -rf TMessagesProj/jni/third_party/absl && git clone --depth 1 --branch 20240722.0 https://github.com/abseil/abseil-cpp.git TMessagesProj/jni/third_party/absl
 
           # Native sources and headers required by CMakeLists.txt
           rm -rf TMessagesProj/jni/third_party/xiph/ogg && git clone --depth 1 https://github.com/xiph/ogg.git TMessagesProj/jni/third_party/xiph/ogg
