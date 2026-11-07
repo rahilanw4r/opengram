@@ -65,10 +65,10 @@ public class DeeplinkHelper {
                 fragment = CherrygramPreferencesNavigator.INSTANCE.createAbout(hostFragment);
             }
             case DeepLinksRepo.CG_ADS -> {
-                fragment = CherrygramPreferencesNavigator.INSTANCE.createADS(hostFragment);
+                fragment = CherrygramPreferencesNavigator.INSTANCE.createAbout(hostFragment);
             }
             case DeepLinksRepo.CG_Alternative_Support -> {
-                fragment = CherrygramPreferencesNavigator.INSTANCE.createAlternativeSupport(hostFragment);
+                fragment = CherrygramPreferencesNavigator.INSTANCE.createAbout(hostFragment);
             }
             case DeepLinksRepo.CG_Appearance -> {
                 fragment = CherrygramPreferencesNavigator.INSTANCE.createAppearance(hostFragment);
@@ -235,11 +235,11 @@ public class DeeplinkHelper {
                     return;
                 }
                 case DeepLinksRepoDeprecated.CG_ADS-> {
-                    CherrygramPreferencesNavigator.INSTANCE.createADS(fragment);
+                    CherrygramPreferencesNavigator.INSTANCE.createAbout(fragment);
                     return;
                 }
                 case DeepLinksRepoDeprecated.CG_Alternative_Support -> {
-                    CherrygramPreferencesNavigator.INSTANCE.createAlternativeSupport(fragment);
+                    CherrygramPreferencesNavigator.INSTANCE.createAbout(fragment);
                     return;
                 }
                 case DeepLinksRepoDeprecated.CG_Appearance -> {

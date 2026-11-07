@@ -18,9 +18,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.telegram.messenger.ApplicationLoader
-import org.telegram.messenger.MessagesController
-import org.telegram.messenger.UserConfig
-import uz.unnarsx.cherrygram.core.firebase.remoteConfig.RemoteConfigHelper
 import uz.unnarsx.cherrygram.core.helpers.CGResourcesHelper
 import uz.unnarsx.cherrygram.preferences.boolean
 import uz.unnarsx.cherrygram.preferences.int
@@ -33,33 +30,6 @@ object CherrygramFirebaseConfig: CoroutineScope by CoroutineScope(
 ) {
 
     private val sharedPreferences: SharedPreferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE)
-
-    /** Card numbers start */
-    var humoCardNumber by sharedPreferences.string("CP_Humo_Card_Number", "")
-    var tbankCardNumber by sharedPreferences.string("CP_TBank_Card_Number", "")
-    /** Card numbers finish */
-
-    /** SafeStars start */
-    var allowSafeStars by sharedPreferences.boolean("CG_AllowSafeStarsUI1", false)
-    var safe_stars_URL by sharedPreferences.string("CP_SafeStarsURL", "")
-    var safe_stars_URL_RU by sharedPreferences.string("CP_SafeStarsURL_RU", "")
-    /** SafeStars finish */
-
-    /** SafeSurf start */
-    var allowSafeSurf by sharedPreferences.boolean("CG_AllowSafeSurfUI", false)
-    var safe_surf_URL by sharedPreferences.string("CP_SafeSurfURL", "")
-    /** SafeSurf finish */
-
-    /** SafePay start */
-    var allowSafePay by sharedPreferences.boolean("CG_AllowSafePayUI", false)
-    var safe_pay_URL by sharedPreferences.string("CP_SafePayURL", "")
-    /** SafePay finish */
-
-    /** Edify start */
-    var allowEdify by sharedPreferences.boolean("CG_AllowEdify", false)
-    var edify_URL by sharedPreferences.string("CP_EdifyURL", "")
-    /** Edify finish */
-
 
     /** Misc start */
     var useBrailleSpoiler by sharedPreferences.boolean("CG_UseBrailleSpoiler", false)
@@ -79,40 +49,15 @@ object CherrygramFirebaseConfig: CoroutineScope by CoroutineScope(
 
     fun init() {
         launch {
-            FirebaseApp.initializeApp(ApplicationLoader.applicationContext)
-            FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = true
-            Firebase.analytics.setUserProperty("opengram_version", CGResourcesHelper.getCherryVersion())
-            Firebase.analytics.setUserProperty("code_version", CGResourcesHelper.getCodeVersion())
-            Firebase.analytics.setUserProperty("source_code_version", CGResourcesHelper.getSourceCodeVersion())
-            /*FirebaseRemoteConfigHelper_deprecated.init()
-            val success = FirebaseRemoteConfigHelper_deprecated.fetchAndActivate()
-            if (success) {
-                FirebaseRemoteConfigHelper_deprecated.applyConfig()
-            }*/
-
-            RemoteConfigHelper.fetchAndActivate()
-
-            if (allowSafeStars) {
-                val messagesController = MessagesController.getInstance(UserConfig.selectedAccount)
-
-                val exceptions = messagesController.getWebBrowserExceptionsList(false)
-
-                delay(10000)
-                val inAppBrowserEnabled = messagesController.isWebBrowserInAppEnabled
-
-                val hasSafeStarsPro = exceptions.any { it.domain.equals("safestars.pro", ignoreCase = true) }
-                if (!hasSafeStarsPro) {
-                    messagesController.addWebBrowserException("safestars.pro", inAppBrowserEnabled)
-                }
-
-                delay(15000)
-
-                val hasSafeStarsCom = exceptions.any { it.domain.equals("safe-stars.com", ignoreCase = true) }
-                if (!hasSafeStarsCom) {
-                    messagesController.addWebBrowserException("safe-stars.com", inAppBrowserEnabled)
-                }
+            try {
+                FirebaseApp.initializeApp(ApplicationLoader.applicationContext)
+                FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = true
+                Firebase.analytics.setUserProperty("opengram_version", CGResourcesHelper.getCherryVersion())
+                Firebase.analytics.setUserProperty("code_version", CGResourcesHelper.getCodeVersion())
+                Firebase.analytics.setUserProperty("source_code_version", CGResourcesHelper.getSourceCodeVersion())
+            } catch (e: Exception) {
+                // Ignore initialization errors
             }
-
         }
     }
 
