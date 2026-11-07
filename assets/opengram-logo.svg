@@ -1,8 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
   <title id="title">Opengram logo</title>
-  <desc id="desc">A black paper plane centered inside a blue circular ring on a white background.</desc>
+  <desc id="desc">Official Opengram logo: black paper plane centered inside a blue circular ring on a white background.</desc>
   <rect width="512" height="512" fill="#ffffff"/>
-  <circle cx="256" cy="256" r="155" fill="none" stroke="#0878e8" stroke-width="43"/>
-  <path d="M184 267.5 317.5 213c9.5-3.9 16.2 1.7 12.5 12.1l-45.2 126.4c-4.4 12.4-12.6 13.3-20.8 4.7l-39.1-41.1-31.5 17.4c-8.9 4.9-17.5.3-17.9-9.8l-2.1-39.2c-.4-7.3 3.5-12.5 10.6-16z" fill="#17171b"/>
-  <path d="M193.5 275.5 285 235.2 235.2 296l-10.3 10.2-31.4-30.7z" fill="#ffffff"/>
+  <circle cx="256" cy="256" r="116" fill="none" stroke="#066EE9" stroke-width="42"/>
+  <path d="M180 265 C175 267 175 272 179 274 L234 298 L248 338 C250 343 256 343 258 338 L272 324 L323 216 C326 211 321 207 316 209 Z" fill="#16161A"/>
 </svg>
