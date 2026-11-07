@@ -79,13 +79,15 @@ jobs:
 
       - name: Build Standalone APK
         run: |
+          set -o pipefail
           ./gradlew :TMessagesProj_AppStandalone:assembleAfatStandalone --stacktrace \
             --no-daemon \
             -Dorg.gradle.jvmargs="-Xmx3584m -XX:MaxMetaspaceSize=768m -XX:+UseParallelGC" \
             -Pandroid.nativeBuild.parallelLevel=2 \
             2>&1 | tee gradle_build.log || {
-              echo "Standalone build encountered an issue; checking debug variant or details..."
+              echo "=== assembleAfatStandalone failed! Tail of log: ==="
               tail -n 200 gradle_build.log
+              echo "Attempting assembleAfatDebug fallback..."
               ./gradlew :TMessagesProj_AppStandalone:assembleAfatDebug --stacktrace \
                 --no-daemon \
                 -Dorg.gradle.jvmargs="-Xmx3584m -XX:MaxMetaspaceSize=768m -XX:+UseParallelGC" \
@@ -97,16 +99,29 @@ jobs:
                 }
             }
 
+      - name: Upload Build Log on Failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-build-log
+          path: gradle_build.log
+          if-no-files-found: ignore
+
       - name: Locate and Prepare APK
         run: |
-          set -euo pipefail
-          APK_PATH=$(find TMessagesProj_AppStandalone/build/outputs/apk/ -type f -name "*.apk" | head -n 1)
+          echo "Looking for built APKs..."
+          find . -name "*.apk" -type f || true
+
+          APK_PATH=$(find . -name "*.apk" -type f ! -path "*/intermediates/*" | head -n 1)
           if [ -z "$APK_PATH" ]; then
-            echo "Searching all project modules for output APK..."
-            APK_PATH=$(find . -path "*/build/outputs/apk/*" -type f -name "*.apk" | head -n 1)
+            echo "ERROR: No APK found after build!"
+            if [ -f gradle_build.log ]; then
+              echo "=== LAST 200 LINES OF GRADLE LOG ==="
+              tail -n 200 gradle_build.log
+            fi
+            exit 1
           fi
-          echo "Found APK at: $APK_PATH"
-          test -n "$APK_PATH"
+          echo "Selected APK: $APK_PATH"
           cp "$APK_PATH" Opengram.apk
           ls -lh Opengram.apk
 
