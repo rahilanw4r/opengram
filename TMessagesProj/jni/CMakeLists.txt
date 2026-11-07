@@ -103,7 +103,6 @@ set_target_properties(prisma PROPERTIES IMPORTED_LOCATION ${CMAKE_HOME_DIRECTORY
 
 #tgnet
 add_library(tgnet STATIC
-        security/secure_validator.cpp
         openssl/aes_ige.c
         tgnet/ApiScheme.cpp
         tgnet/BuffersStorage.cpp
@@ -219,7 +218,6 @@ set(NATIVE_LIB "tmessages.49")
 
 #tmessages
 add_library(${NATIVE_LIB} SHARED
-        security/secure_validator.cpp
         jni.c
         audio.c
         webm_encoder.c

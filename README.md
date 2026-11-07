@@ -1,7 +1,7 @@
 # Opengram for Android
 
 <p align="center">
-  <img src="assets/opengram-logo.svg" alt="Opengram logo" width="140" />
+  <img src="assets/opengram-logo.png" alt="Opengram logo" width="150" />
 </p>
 
 <p align="center">

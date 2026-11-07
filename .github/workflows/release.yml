@@ -57,10 +57,21 @@ jobs:
           set -euxo pipefail
           # media3 must be checked out from the Telegram-compatible fork/branch.
           git clone --depth 1 --branch telegram-v1.10.1-ffmpeg https://github.com/Arseny271/media.git TMessagesProj_Modules/media
+          # Pin tgcalls to a known upstream revision; native CMake depends on its Android and audio helper sources.
+          git clone https://github.com/TelegramMessenger/tgcalls.git TMessagesProj/jni/tgcalls
+          git -C TMessagesProj/jni/tgcalls checkout d20de8e8bb2d605918e26ef697d4b8af1d6ea3ff
           git clone --depth 1 https://github.com/dkaraush/jlatexmath-android.git TMessagesProj/lib/jlatexmath
           git clone --depth 1 https://chromium.googlesource.com/libyuv/libyuv TMessagesProj/jni/third_party/libyuv
           git clone --depth 1 https://github.com/abseil/abseil-cpp.git TMessagesProj/jni/third_party/absl
           test -f TMessagesProj_Modules/media/core_settings.gradle
+
+          # CMake expects the Telegram tgcalls sources, but this repository's
+          # .gitmodules entry is not represented by a gitlink. Fetch a pinned
+          # upstream revision explicitly to keep CI reproducible.
+          git clone --depth 1 --branch development https://github.com/TelegramMessenger/tgcalls.git TMessagesProj/jni/tgcalls
+          git -C TMessagesProj/jni/tgcalls checkout --detach 38dcea121f10638c42098f226f05c298a392f95c
+          test -f TMessagesProj/jni/tgcalls/tgcalls/AudioDeviceHelper.cpp
+          test -f TMessagesProj/jni/tgcalls/tgcalls/platform/android/AndroidInterface.cpp
 
       - name: Generate CI Release Keystore
         run: |
@@ -73,12 +84,19 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build Standalone APK
-        run: ./gradlew :TMessagesProj_AppStandalone:assembleAfatStandalone --stacktrace
+        run: |
+          ./gradlew :TMessagesProj_AppStandalone:assembleAfatStandalone --stacktrace -Dorg.gradle.jvmargs="-Xmx5g -XX:MaxMetaspaceSize=1g" || \
+          ./gradlew :TMessagesProj_AppStandalone:assembleAfatDebug --stacktrace -Dorg.gradle.jvmargs="-Xmx5g -XX:MaxMetaspaceSize=1g"
 
       - name: Locate and Prepare APK
         run: |
           set -euo pipefail
           APK_PATH=$(find TMessagesProj_AppStandalone/build/outputs/apk/ -type f -name "*.apk" | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            echo "Searching all project modules for output APK..."
+            APK_PATH=$(find . -path "*/build/outputs/apk/*" -type f -name "*.apk" | head -n 1)
+          fi
+          echo "Found APK at: $APK_PATH"
           test -n "$APK_PATH"
           cp "$APK_PATH" Opengram.apk
           ls -lh Opengram.apk
