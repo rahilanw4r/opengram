@@ -28,7 +28,7 @@ jobs:
 
       - name: Free Disk Space & Configure Swap
         run: |
-          sudo fallocate -l 6G /swapfile || true
+          sudo fallocate -l 6G /swapfile || sudo dd if=/dev/zero of=/swapfile bs=1M count=6144 || true
           sudo chmod 600 /swapfile || true
           sudo mkswap /swapfile || true
           sudo swapon /swapfile || true
@@ -79,8 +79,23 @@ jobs:
 
       - name: Build Standalone APK
         run: |
-          ./gradlew :TMessagesProj_AppStandalone:assembleAfatStandalone --stacktrace -Dorg.gradle.jvmargs="-Xmx5g -XX:MaxMetaspaceSize=1g" || \
-          ./gradlew :TMessagesProj_AppStandalone:assembleAfatDebug --stacktrace -Dorg.gradle.jvmargs="-Xmx5g -XX:MaxMetaspaceSize=1g"
+          ./gradlew :TMessagesProj_AppStandalone:assembleAfatStandalone --stacktrace \
+            --no-daemon \
+            -Dorg.gradle.jvmargs="-Xmx3584m -XX:MaxMetaspaceSize=768m -XX:+UseParallelGC" \
+            -Pandroid.nativeBuild.parallelLevel=2 \
+            2>&1 | tee gradle_build.log || {
+              echo "Standalone build encountered an issue; checking debug variant or details..."
+              tail -n 200 gradle_build.log
+              ./gradlew :TMessagesProj_AppStandalone:assembleAfatDebug --stacktrace \
+                --no-daemon \
+                -Dorg.gradle.jvmargs="-Xmx3584m -XX:MaxMetaspaceSize=768m -XX:+UseParallelGC" \
+                -Pandroid.nativeBuild.parallelLevel=2 \
+                2>&1 | tee -a gradle_build.log || {
+                  echo "=== BUILD FAILED: LAST 200 LINES OF LOG ==="
+                  tail -n 200 gradle_build.log
+                  exit 1
+                }
+            }
 
       - name: Locate and Prepare APK
         run: |

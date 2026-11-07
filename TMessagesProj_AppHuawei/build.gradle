@@ -439,11 +439,13 @@ tasks.configureEach { task ->
     }
 
     if (task.name == 'assembleAfatRelease') {
-        if (isWindowsOrMacOS()) {
-            sendApk.mustRunAfter copyFiles
-            task.finalizedBy 'copyFiles', 'sendApk'
-        } else {
-            task.finalizedBy 'sendApk'
+        if (project.hasProperty('sendApkToTelegram') && !System.getenv("CI")) {
+            if (isWindowsOrMacOS()) {
+                sendApk.mustRunAfter copyFiles
+                task.finalizedBy 'copyFiles', 'sendApk'
+            } else {
+                task.finalizedBy 'sendApk'
+            }
         }
     }
 }

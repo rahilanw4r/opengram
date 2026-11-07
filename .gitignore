@@ -40,3 +40,7 @@ Opengram.jks
 mykey.jks
 actions-runner
 secrets_for_ci.env
+TMessagesProj_Modules/
+TMessagesProj/lib/
+TMessagesProj/jni/tgcalls/
+TMessagesProj/jni/third_party/
