@@ -121,13 +121,38 @@ jobs:
           repo = os.environ.get('GITHUB_REPOSITORY', '')
           sha = os.environ.get('GITHUB_SHA', '')
 
-          log_text = 'No log available'
-          if os.path.exists('gradle_build.log'):
-              with open('gradle_build.log', 'r', errors='ignore') as f:
-                  lines = f.readlines()
-                  log_text = ''.join(lines[-150:])[:60000]
+          collected = []
 
-          body = f'### CI Build Failure Log ({sha})\n\`\`\`\n{log_text}\n\`\`\`'
+          # 1. Collect any CMake output / error logs in .cxx
+          for root, dirs, files in os.walk('.'):
+              for f in files:
+                  if f in ['build_output.txt', 'cmake_output.txt', 'build_command.txt'] or 'cmake' in f.lower():
+                      p = os.path.join(root, f)
+                      try:
+                          c = open(p, 'r', errors='ignore').read().strip()
+                          if c:
+                              collected.append(f'=== {p} ===\n' + c[-3000:])
+                      except Exception:
+                          pass
+
+          # 2. Extract error context lines from gradle_build.log
+          if os.path.exists('gradle_build.log'):
+              lines = open('gradle_build.log', 'r', errors='ignore').readlines()
+              seen_blocks = set()
+              for i, line in enumerate(lines):
+                  if any(k in line for k in ['CMake Error', 'FAILED:', 'error:', 'fatal error:', '* What went wrong:']):
+                      start = max(0, i - 10)
+                      end = min(len(lines), i + 35)
+                      block = ''.join(lines[start:end])
+                      if block not in seen_blocks:
+                          seen_blocks.add(block)
+                          collected.append(f'=== Gradle Log Match (line {i}) ===\n' + block)
+
+          if not collected and os.path.exists('gradle_build.log'):
+              collected.append('=== Last 300 Lines of gradle_build.log ===\n' + ''.join(open('gradle_build.log', 'r', errors='ignore').readlines()[-300:]))
+
+          full_body = '\n\n'.join(collected)[:60000] if collected else 'No error logs captured'
+          body = f'### CI Build Failure Diagnostics ({sha})\n\`\`\`\n{full_body}\n\`\`\`'
           url = f'https://api.github.com/repos/{repo}/commits/{sha}/comments'
           req = urllib.request.Request(
               url,
@@ -140,7 +165,7 @@ jobs:
           )
           try:
               with urllib.request.urlopen(req) as resp:
-                  print('Posted failure log to commit comment, status:', resp.status)
+                  print('Posted failure diagnostics to commit comment, status:', resp.status)
           except Exception as e:
               print('Failed to post commit comment:', e)
           "
