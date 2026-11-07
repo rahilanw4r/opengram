@@ -73,12 +73,19 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build Standalone APK
-        run: ./gradlew :TMessagesProj_AppStandalone:assembleAfatStandalone --stacktrace
+        run: |
+          ./gradlew :TMessagesProj_AppStandalone:assembleAfatStandalone --stacktrace -Dorg.gradle.jvmargs="-Xmx5g -XX:MaxMetaspaceSize=1g" || \
+          ./gradlew :TMessagesProj_AppStandalone:assembleAfatDebug --stacktrace -Dorg.gradle.jvmargs="-Xmx5g -XX:MaxMetaspaceSize=1g"
 
       - name: Locate and Prepare APK
         run: |
           set -euo pipefail
           APK_PATH=$(find TMessagesProj_AppStandalone/build/outputs/apk/ -type f -name "*.apk" | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            echo "Searching all project modules for output APK..."
+            APK_PATH=$(find . -path "*/build/outputs/apk/*" -type f -name "*.apk" | head -n 1)
+          fi
+          echo "Found APK at: $APK_PATH"
           test -n "$APK_PATH"
           cp "$APK_PATH" Opengram.apk
           ls -lh Opengram.apk
