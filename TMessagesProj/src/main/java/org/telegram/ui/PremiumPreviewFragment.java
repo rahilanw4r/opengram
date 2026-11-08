@@ -2387,6 +2387,7 @@ public class PremiumPreviewFragment extends BaseFragment implements Notification
         private ProductDetails.SubscriptionOfferDetails offerDetails;
 
         public int yOffset;
+        public boolean isSafeStars;
 
 
         public SubscriptionTier(TLRPC.TL_premiumSubscriptionOption subscriptionOption) {

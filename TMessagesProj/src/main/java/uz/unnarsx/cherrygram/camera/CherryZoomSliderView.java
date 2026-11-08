@@ -21,7 +21,13 @@ import org.telegram.ui.Components.blur3.drawable.color.BlurredBackgroundColorPro
 public class CherryZoomSliderView extends View {
 
     public interface OnPresetSelectedListener {
+        void onPresetSelected(float zoom);
+    }
 
+    private OnPresetSelectedListener onPresetSelectedListener;
+
+    public void setOnPresetSelectedListener(OnPresetSelectedListener listener) {
+        this.onPresetSelectedListener = listener;
     }
 
     public interface ZoomController {

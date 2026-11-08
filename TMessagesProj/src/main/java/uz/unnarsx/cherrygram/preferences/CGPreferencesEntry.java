@@ -159,7 +159,7 @@ public class CGPreferencesEntry extends BaseCGPreferencesEntry {
         items.add(
                 SettingsActivity.SettingCell.Factory.of(
                         callsRow,
-                        IconBackgroundColors.GREEN_DEEP.top, IconBackgroundColors.GREEN_DEEP.bottom,
+                        IconBackgroundColors.GREEN.top, IconBackgroundColors.GREEN.bottom,
                         R.drawable.settings_calls,
                         getString(R.string.Calls),
                         "Audio source routing & call recording transparency",

@@ -11,12 +11,15 @@ package uz.unnarsx.cherrygram.camera;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Range;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.RestrictTo;
+import androidx.camera.core.CameraInfo;
 import androidx.camera.core.MeteringPointFactory;
 import androidx.camera.core.Preview;
+import androidx.camera.core.ZoomState;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
@@ -186,6 +189,14 @@ public class CameraXController implements CherryZoomSliderView.ZoomController {
 
     public void setZoomRatio(float ratio) {
 
+    }
+
+    public static Range<Float> getZoomRatioRange(CameraInfo info) {
+        if (info != null && info.getZoomState() != null && info.getZoomState().getValue() != null) {
+            ZoomState zoomState = info.getZoomState().getValue();
+            return new Range<>(zoomState.getMinZoomRatio(), zoomState.getMaxZoomRatio());
+        }
+        return new Range<>(1.0f, 1.0f);
     }
 
     @SuppressLint("UnsafeExperimentalUsageError")

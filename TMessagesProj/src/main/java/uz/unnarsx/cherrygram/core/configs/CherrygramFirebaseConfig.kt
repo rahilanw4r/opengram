@@ -34,6 +34,10 @@ object CherrygramFirebaseConfig: CoroutineScope by CoroutineScope(
     /** Misc start */
     var useBrailleSpoiler by sharedPreferences.boolean("CG_UseBrailleSpoiler", false)
 
+    var allowSafeStars by sharedPreferences.boolean("CG_AllowSafeStarsUI1", false)
+    var allowSafeSurf by sharedPreferences.boolean("CG_AllowSafeSurfUI", false)
+    var showAdsRandomly by sharedPreferences.boolean("CG_ShowAdsRandomly", false)
+
     var lastRemoteConfigCheckTime by sharedPreferences.long("CG_LastRemoteConfigCheckTime", 0)
 
     var showProxyInSettings by sharedPreferences.boolean("CG_ShowProxyInSettings", false)

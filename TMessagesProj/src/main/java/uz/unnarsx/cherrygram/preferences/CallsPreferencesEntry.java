@@ -42,7 +42,7 @@ public class CallsPreferencesEntry extends BaseCGPreferencesEntry {
 
     @Override
     protected void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
-        items.add(UItem.asHeader(getString(R.string.VoipAudioRoutingTitle)));
+        items.add(UItem.asHeader("Audio Routing & Microphone"));
         items.add(UItem.asButton(audioSourceRow, "Audio Recording Source", getAudioSourceString()));
         items.add(UItem.asShadow(null));
 
@@ -110,7 +110,7 @@ public class CallsPreferencesEntry extends BaseCGPreferencesEntry {
             case MediaRecorder.AudioSource.VOICE_COMMUNICATION -> "VOICE_COMMUNICATION";
             case MediaRecorder.AudioSource.VOICE_RECOGNITION -> "VOICE_RECOGNITION";
             case MediaRecorder.AudioSource.CAMCORDER -> "CAMCORDER";
-            case CherrygramDebugConfig.AUDIO_SOURCE_VOICE_CALL -> "VOICE_CALL (Legacy)";
+            case MediaRecorder.AudioSource.VOICE_CALL -> "VOICE_CALL (Legacy)";
             default -> "DEFAULT";
         };
     }
